@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
+	template="/WEB-INF/layouts/standard.xhtml">
+	<ui:define name="content">
+
+		<!-- Main View -->
+		<pm:view id="devices">
+			<pm:header title="Devices">
+				<f:facet name="left">
+					<p:button value="Back" icon="back" href="homepage" />
+				</f:facet>
+				<f:facet name="right">
+					<p:button value="New" icon="new" href="deviceDetails" />
+				</f:facet>
+			</pm:header>
+
+			<pm:content>
+				<h:form id="devicesForm">
+					<p:dataList value="#{deviceController.deviceList}" var="device">
+						<p:column>
+							<p:commandLink value="#{device.name}" action="details">
+								<f:setPropertyActionListener value="#{device}" target="#{deviceController.selected}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataList>
+				</h:form>
+			</pm:content>
+		</pm:view>
+
+	</ui:define>
+</ui:composition>

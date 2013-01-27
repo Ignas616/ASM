@@ -8,23 +8,21 @@
 	template="/WEB-INF/layouts/standard.xhtml">
 	<ui:define name="content">
 
-		<!-- Main View -->
-		<pm:view id="main">
-			<pm:header title="ASM PRoject" swatch="b" />
+		<pm:view id="details">
+			<pm:header title="Device Details">
+				<f:facet name="left">
+					<p:commandButton value="Back" action="back" />
+				</f:facet>
+				<f:facet name="right">
+					<p:commandButton value="Save" action="save" />
+				</f:facet>
+			</pm:header>
+
 			<pm:content>
-
-				<p:dataList type="inset">
-					<f:facet name="header">Navigation</f:facet>
-					<h:outputLink value="device">Devices</h:outputLink>
-					<h:outputLink value="reports">Reports</h:outputLink>
-				</p:dataList>
-
+				<h:form id="devaiceDetailsForm">
+					<p:inputText label="Name: "	value="#{deviceController.selected.name}" />
+				</h:form>
 			</pm:content>
 		</pm:view>
-		
-		
-
-
-
 	</ui:define>
 </ui:composition>

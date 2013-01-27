@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow  
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<action-state id="start">
+		<evaluate expression="deviceController.updateData()" />
+		<transition to="device" />
+	</action-state>
+
+	<view-state id="device" view="device.xhtml">
+		<transition on="details" to="unitDetails" />
+		<transition on="new" to="newUnit" />
+		<transition on="homepage" to="endFlow" />
+	</view-state>
+	
+	<action-state id="newUnit">
+		<evaluate expression="deviceController.createNew()" />
+		<transition to="unitDetails" />
+	</action-state>
+	
+	<view-state id="unitDetails" view="deviceDetails.xhtml">
+		<transition on="back" to="device" />
+		<transition on="save" to="saveUnit" />
+	</view-state>
+	
+	<action-state id="saveUnit">
+		<evaluate expression="deviceController.save()" />
+		<transition to="start" />
+	</action-state>	
+	
+	<end-state id="endFlow" view="externalRedirect:homepage"/>
+	
+	
+</flow>
