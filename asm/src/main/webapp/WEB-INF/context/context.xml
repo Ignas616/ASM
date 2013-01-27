@@ -16,13 +16,13 @@
 		http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-
-    <aop:aspectj-autoproxy/>
-    
     <import resource="app-config.xml"/>
     
     <import resource="spring-entity.xml"/>
     <import resource="spring-entity-datasource.xml"/>
+    <import resource="spring-repositories.xml"/>
+    <import resource="spring-services.xml"/>
+    <import resource="spring-controllers.xml"/>
     <import resource="webflow-config.xml"/>
 
 </beans>
