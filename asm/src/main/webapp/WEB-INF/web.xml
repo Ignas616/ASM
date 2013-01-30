@@ -8,14 +8,11 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>        	
-        	/WEB-INF/context/context.xml    	
+        	/WEB-INF/context/context.xml
+            /WEB-INF/spring/app-config.xml
+            /WEB-INF/spring/webflow-config.xml
         </param-value>
 	</context-param>
-	
-	<context-param>  
-	    <param-name>primefaces.THEME</param-name>  
-	    <param-value>smoothness</param-value>  
-	</context-param> 
 
 	<!-- Spring encoding filter implementation -->
 
@@ -36,8 +33,6 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
-
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -69,10 +64,13 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.faces</url-pattern>
+    </servlet-mapping>
 
 
-
-	<!-- SPRING MVC -->
+    <!-- SPRING MVC -->
 
 	<servlet>
 		<servlet-name>Spring MVC Servlet</servlet-name>
@@ -89,20 +87,7 @@
 		<url-pattern>/app/*</url-pattern>
 	</servlet-mapping>
 
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.faces</url-pattern>
-	</servlet-mapping>
-
-
-	<!-- Spring Security Facelets tag library declaration -->
-	<context-param>
-		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-		<param-value>/WEB-INF/springsecurity.taglib.xml</param-value>
-	</context-param>
-
 	<!-- DEFAULT PAGE -->
-
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

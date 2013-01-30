@@ -9,9 +9,9 @@
 		http://www.springframework.org/schema/faces http://www.springframework.org/schema/faces/spring-faces-2.2.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	
-	<context:annotation-config/>	
-	<context:component-scan base-package="com.demo.asm"/> 
+
+	<context:annotation-config/>
+	<context:component-scan base-package="com.demo.asm"/>
 	
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -20,9 +20,10 @@
 	<!-- 
 		Enable serving of classpath with Spring 3 resource serving mechanism. For example:
 		/webflow-primefaces-showcase/app/resources/styles/blueprint/print.css
-	-->
+
 	<mvc:resources location="/resources/" mapping="/resources/**" />
-	
+	-->
+
 	<!-- 
 		Enable processing of JSF 2 resource requests. For example:
 		/webflow-primefaces-showcase/app/javax.faces.resource/jsf.js?ln=javax.faces

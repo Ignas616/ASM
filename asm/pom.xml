@@ -74,7 +74,6 @@
 	</developers>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -85,10 +84,7 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-
-
-
-		</plugins>
+        </plugins>
 	</build>
 	<dependencies>
 		<dependency>
@@ -138,21 +134,6 @@
 			<groupId>ognl</groupId>
 			<artifactId>ognl</artifactId>
 			<version>3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.kenai.nbpwr</groupId>
@@ -210,11 +191,6 @@
 			<version>3.4.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.primefaces.themes</groupId>
-			<artifactId>smoothness</artifactId>
-			<version>1.0.8</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>el-api</artifactId>
 			<version>6.0.29</version>
@@ -225,41 +201,11 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.3</version>
 		</dependency>
-		<!-- testing -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.unitils</groupId>
-			<artifactId>unitils</artifactId>
-			<version>2.4</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.unitils</groupId>
-			<artifactId>unitils-database</artifactId>
-			<version>3.1</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-nop</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
+        <dependency>
 			<groupId>hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>1.8.0.7</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext</artifactId>
-			<version>1.4.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -288,13 +234,11 @@
 			<version>9.0-801.jdbc4</version>
 			<scope>compile</scope>
 		</dependency>
-	    <dependency>  
-	        <groupId>org.primefaces</groupId>  
-	        <artifactId>primefaces-mobile</artifactId>  
-	        <version>0.9.3</version>  
-	    </dependency>  
-
-
+        <!--Spring AOP and AspectJ-->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces-mobile</artifactId>
+            <version>0.9.3</version>
+        </dependency>
     </dependencies>
-
 </project>

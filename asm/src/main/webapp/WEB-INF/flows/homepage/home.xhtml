@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
-	template="/WEB-INF/layouts/standard.xhtml">
-	<ui:define name="content">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
+                template="/WEB-INF/layouts/standard.xhtml">
+    <ui:define name="content">
 
-		<!-- Main View -->
-		<pm:view id="main">
-			<pm:header title="ASM PRoject" swatch="b" />
-			<pm:content>
+        <!-- Main View -->
+        <pm:view id="main">
+            <pm:header title="ASM PRoject" swatch="b" />
+            <pm:content>
 
-				<p:dataList type="inset">
-					<f:facet name="header">Navigation</f:facet>
-					<h:outputLink value="device">Devices</h:outputLink>
-					<h:outputLink value="reports">Reports</h:outputLink>
-				</p:dataList>
+                <p:dataList type="inset">
+                    <f:facet name="header">Navigation</f:facet>
+                    <h:outputLink value="device">Devices</h:outputLink>
+                    <h:outputLink value="reports">Reports</h:outputLink>
+                </p:dataList>
 
-			</pm:content>
-		</pm:view>
-		
-		
-
-
-
-	</ui:define>
+            </pm:content>
+        </pm:view>
+    </ui:define>
 </ui:composition>

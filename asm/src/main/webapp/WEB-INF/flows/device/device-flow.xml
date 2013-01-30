@@ -11,8 +11,7 @@
 
 	<view-state id="device" view="device.xhtml">
 		<transition on="details" to="unitDetails" />
-		<transition on="new" to="newUnit" />
-		<transition on="homepage" to="endFlow" />
+		<transition on="newUnit" to="newUnit" />
 	</view-state>
 	
 	<action-state id="newUnit">
@@ -28,9 +27,7 @@
 	<action-state id="saveUnit">
 		<evaluate expression="deviceController.save()" />
 		<transition to="start" />
-	</action-state>	
-	
-	<end-state id="endFlow" view="externalRedirect:homepage"/>
+	</action-state>
 	
 	
 </flow>
