@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.demo.asm.controller.device.DeviceController;
 import com.demo.asm.model.device.Device;
 import com.demo.asm.services.device.DeviceService;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
+@Controller("deviceController")
+@Scope("session")
 public class DeviceControllerImpl implements DeviceController {
 
 	@Autowired

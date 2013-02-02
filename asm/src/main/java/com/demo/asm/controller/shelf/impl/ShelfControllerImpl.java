@@ -5,11 +5,15 @@ import com.demo.asm.model.shelf.Shelf;
 import com.demo.asm.model.shelf.ShelfType;
 import com.demo.asm.services.shelf.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import java.util.List;
 
+@Controller("shelfController")
+@Scope("session")
 public class ShelfControllerImpl implements ShelfController {
 
 	@Autowired

@@ -12,13 +12,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "devicetype")
-@SequenceGenerator(name = "deviceType_seq", sequenceName = "deviceType_seq", allocationSize = 1)
+@SequenceGenerator(name = "devicetype_seq", sequenceName = "devicetype_seq", allocationSize = 1)
 public class DeviceType implements Serializable{
 	
 	private static final long serialVersionUID = -7520724946566388873L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="deviceType_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="devicetype_seq")
 	@Column(name = "id")
 	private int id;
 	
