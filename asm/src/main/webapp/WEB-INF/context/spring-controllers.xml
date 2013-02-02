@@ -6,4 +6,8 @@
 		class="com.demo.asm.controller.device.impl.DeviceControllerImpl"
 		scope="session" />
 
+    <bean id="shelfController"
+          class="com.demo.asm.controller.shelf.impl.ShelfControllerImpl"
+          scope="session" />
+
 </beans>

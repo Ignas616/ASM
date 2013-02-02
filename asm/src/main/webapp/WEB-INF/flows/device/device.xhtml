@@ -1,54 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
-	template="/WEB-INF/layouts/standard.xhtml">
-	<ui:define name="content">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pm="http://primefaces.org/mobile"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
 
-		<!-- Main View -->
-		<pm:view id="devices">
-			<pm:header title="Devices">
-				<f:facet name="left">
-					<p:commandButton value="Back" icon="back" action="homepage" />
-				</f:facet>
-				<f:facet name="right">
-					<p:button value="New" icon="new" update=":devaiceDetailsForm" action="pm:newUnit" />
-				</f:facet>
-			</pm:header>
-
-			<pm:content>
-				<h:form id="devicesForm">
-					<p:dataList value="#{deviceController.deviceList}" var="device">
-						<p:column>
-							<p:commandLink value="#{device.name}" action="details">
-								<f:setPropertyActionListener value="#{device}" target="#{deviceController.selected}" />
-							</p:commandLink>
-						</p:column>
-					</p:dataList>
-				</h:form>
-			</pm:content>
-		</pm:view>
-
-        <pm:view id="newUnit">
-            <pm:header title="Device Details">
+    <pm:page title="ASM: Devices">
+        <pm:view id="devices">
+            <pm:header title="Devices">
                 <f:facet name="left">
-                    <p:button value="Back" icon="back" href="device" />
+                    <p:commandButton value="Back" icon="back" action="back" />
                 </f:facet>
                 <f:facet name="right">
-                    <p:commandButton value="Save" icon="save"  action="save" />
+                    <pm:buttonGroup orientation="horizontal">
+                        <p:commandButton value="New" icon="new" action="newUnit"  />
+                    </pm:buttonGroup>
                 </f:facet>
             </pm:header>
-
+            <p:messages id="adminSaveMsg" showDetail="true" autoUpdate="true" />
             <pm:content>
-                <h:form id="devaiceDetailsForm">
-                    <p:inputText label="Name: "	value="#{deviceController.selected.name}" />
+                <h:form id="devicesForm">
+                    <p:dataList value="#{deviceController.deviceList}" var="device">
+                        <p:column>
+                            <p:commandLink value="#{device.name}" action="details">
+                                <f:setPropertyActionListener value="#{device}" target="#{deviceController.selected}" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataList>
                 </h:form>
             </pm:content>
+
         </pm:view>
-
-
-	</ui:define>
-</ui:composition>
+    </pm:page>
+</f:view>

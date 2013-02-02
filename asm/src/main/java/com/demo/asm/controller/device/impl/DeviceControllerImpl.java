@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import com.demo.asm.model.device.DeviceType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.demo.asm.controller.device.DeviceController;
@@ -12,15 +13,25 @@ import com.demo.asm.model.device.Device;
 import com.demo.asm.services.device.DeviceService;
 
 public class DeviceControllerImpl implements DeviceController {
+
 	@Autowired
 	private DeviceService service;
 	
 	private List<Device> deviceList;
-	
-	
-	private Device selected;		
 
-	public DeviceService getService() {
+    private List<DeviceType> deviceTypeList;
+	
+	private Device selected;
+
+    public List<DeviceType> getDeviceTypeList() {
+        return deviceTypeList;
+    }
+
+    public void setDeviceTypeList(List<DeviceType> deviceTypeList) {
+        this.deviceTypeList = deviceTypeList;
+    }
+
+    public DeviceService getService() {
 		return service;
 	}
 
@@ -52,8 +63,8 @@ public class DeviceControllerImpl implements DeviceController {
 
 	@Override
 	public void save() {
-		try {
-			service.save(getSelected());
+        try {
+            service.save(getSelected());
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
 			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
 		} catch (Exception e) {
@@ -62,17 +73,25 @@ public class DeviceControllerImpl implements DeviceController {
 		}
 	}
 
-	@Override
-	public void updateData() {
+    @Override
+    public void delete() {
+        try {
+            service.delete(getSelected());
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Deleted", "Data Removed");
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        }
+    }
+
+    public void updateData() {
 		setDeviceList(service.getAll());
+        setDeviceTypeList(service.getAllDeviceTypes());
 	}
 	
 	public boolean checkSelected() {
-		if (getSelected() == null) {
-			return false;
-		} else {
-			return true;
-		}
+        return getSelected() != null;
 	}
 
 }

@@ -1,28 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
-	template="/WEB-INF/layouts/standard.xhtml">
-	<ui:define name="content">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pm="http://primefaces.org/mobile"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
 
-		<pm:view id="details">
-			<pm:header title="Device Details">
-				<f:facet name="left">
-                    <p:button value="Back" icon="back" href="device" />
-				</f:facet>
-				<f:facet name="right">
-					<p:commandButton value="Save" icon="save"  action="save" />
-				</f:facet>
-			</pm:header>
+    <pm:page title="ASM: Devices">
+        <pm:view id="details">
+            <pm:header title="Device Details">
+                <f:facet name="left">
+                    <p:commandButton value="Back" icon="back" action="back" />
+                </f:facet>
+                <f:facet name="right">
+                    <pm:buttonGroup orientation="horizontal">
+                        <p:commandButton value="Save" icon="save" action="save" />
+                        <p:commandButton value="Delete" icon="delete" action="delete"/>
+                    </pm:buttonGroup>
+                </f:facet>
+            </pm:header>
 
-			<pm:content>
-				<h:form id="devaiceDetailsForm">
-					<p:inputText label="Name: "	value="#{deviceController.selected.name}" />
-				</h:form>
-			</pm:content>
-		</pm:view>
-	</ui:define>
-</ui:composition>
+            <pm:content>
+                <h:form id="devaiceDetailsForm">
+                    <p:inputText label="Name: "	value="#{deviceController.selected.name}" />
+                    <h:outputText value="Select Device Type: " />
+                    <p:selectOneMenu value="#{deviceController.selected.deviceType}" converter="#{deviceTypeConverter}">
+                        <f:selectItems value="#{deviceController.deviceTypeList}" var="deviceType" itemValue="#{deviceType}" itemLabel="#{deviceType.name}"/>
+                    </p:selectOneMenu>
+                </h:form>
+            </pm:content>
+
+        </pm:view>
+    </pm:page>
+</f:view>
+

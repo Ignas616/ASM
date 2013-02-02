@@ -7,6 +7,7 @@
 
     <import resource="spring-entity.xml"/>
     <import resource="spring-controllers.xml"/>
+    <import resource="spring-converters.xml"/>
     <import resource="spring-entity.xml"/>
     <import resource="spring-entity-datasource.xml"/>
     <import resource="spring-repositories.xml"/>

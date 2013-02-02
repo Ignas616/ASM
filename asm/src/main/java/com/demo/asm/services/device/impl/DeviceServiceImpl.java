@@ -2,6 +2,7 @@ package com.demo.asm.services.device.impl;
 
 import java.util.List;
 
+import com.demo.asm.model.device.DeviceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,6 @@ import com.demo.asm.services.device.DeviceService;
 @Service("deviceService")
 public class DeviceServiceImpl implements DeviceService {
 
-	
 	@Autowired
 	private DeviceRepository repository;
 
@@ -26,9 +26,19 @@ public class DeviceServiceImpl implements DeviceService {
 		return repository.getAll(Device.class);
 	}
 
-	@Override
+    @Override
+    public List<DeviceType> getAllDeviceTypes() {
+      return repository.getAllDeviceTypes();
+    }
+
+    @Override
 	public void save(Device toSave) {
 		repository.save(toSave);
 	}
+
+    @Override
+    public void delete(Device toDelete) {
+        repository.delete(toDelete);
+    }
 
 }

@@ -1,0 +1,36 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pm="http://primefaces.org/mobile"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+
+    <pm:page title="ASM: Shelves">
+        <pm:view id="details">
+            <pm:header title="Shelf Details">
+                <f:facet name="left">
+                    <p:commandButton value="Back" icon="back" action="back" />
+                </f:facet>
+                <f:facet name="right">
+                    <pm:buttonGroup orientation="horizontal">
+                        <p:commandButton value="Save" icon="save" action="save" />
+                        <p:commandButton value="Delete" icon="delete" action="delete"/>
+                    </pm:buttonGroup>
+                </f:facet>
+            </pm:header>
+
+            <pm:content>
+                <h:form id="devaiceDetailsForm">
+                    <p:inputText label="Number: " value="#{shelfController.selected.number}" />
+                    <h:outputText value="Select Shelf Type: " />
+                    <p:selectOneMenu value="#{shelfController.selected.shelfType}" converter="#{shelfTypeConverter}">
+                        <f:selectItems value="#{shelfController.shelfTypeList}" var="shelfType" itemValue="#{shelfType}" itemLabel="#{shelfType.name}"/>
+                    </p:selectOneMenu>
+                </h:form>
+            </pm:content>
+
+        </pm:view>
+    </pm:page>
+</f:view>
+

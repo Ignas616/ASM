@@ -10,6 +10,7 @@
 	</action-state>
 
 	<view-state id="device" view="device.xhtml">
+        <transition on="back" to="homepage" />
 		<transition on="details" to="unitDetails" />
 		<transition on="newUnit" to="newUnit" />
 	</view-state>
@@ -20,14 +21,20 @@
 	</action-state>
 	
 	<view-state id="unitDetails" view="deviceDetails.xhtml">
-		<transition on="back" to="device" />
-		<transition on="save" to="saveUnit" />
+		<transition on="back" to="device" bind="false" />
+        <transition on="save" to="saveUnit" />
+        <transition on="delete" to="deleteUnit" />
 	</view-state>
 	
 	<action-state id="saveUnit">
-		<evaluate expression="deviceController.save()" />
-		<transition to="start" />
-	</action-state>
-	
-	
+    <evaluate expression="deviceController.save()" />
+    <transition to="start" />
+    </action-state>
+
+    <action-state id="deleteUnit">
+        <evaluate expression="deviceController.delete()" />
+        <transition to="start" />
+    </action-state>
+
+    <end-state id="homepage" view="externalRedirect:contextRelative:/" />
 </flow>
