@@ -38,6 +38,10 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+    <listener>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
+
 	<!-- JSF 2 IMPLEMENTATION -->
 
 	<!-- Use JSF view templates saved as *.xhtml, for use with Facelets -->
