@@ -82,7 +82,7 @@ public class ShelfControllerImpl implements ShelfController {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Deleted", "Data Removed");
             FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
         } catch (Exception e) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during delete! " + e.getMessage());
             FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
         }
     }
