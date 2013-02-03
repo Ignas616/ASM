@@ -19,7 +19,7 @@ public class Card implements Serializable{
 	private String name;
 		
 	@OneToOne
-	@JoinColumn(name = "cardtype")
+	@JoinColumn(name = "card_type")
 	private CardType cardType;
 
 	public int getId() {

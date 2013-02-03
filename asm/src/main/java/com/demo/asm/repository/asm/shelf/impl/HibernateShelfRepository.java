@@ -24,15 +24,13 @@ public class HibernateShelfRepository extends HibernateBaseRepository implements
     @Override
     public List<Card> getAllCardsForThisShelfType(int shelfTypeId) {
 
-        String critAlias = "cardType";
-
         DetachedCriteria criteria = DetachedCriteria.forClass(Card.class);
         DetachedCriteria subCriteria = DetachedCriteria.forClass(ShelfAllowedCardType.class);
 
-        subCriteria.setProjection(Projections.property(critAlias+"Id"));
+        subCriteria.setProjection(Projections.property("cardTypeId"));
         subCriteria.add(Restrictions.eq("shelfTypeId", shelfTypeId));
 
-        criteria.add(Subqueries.propertyIn(critAlias + ".id", subCriteria));
+        criteria.add(Subqueries.propertyIn("cardType.id", subCriteria));
 
         List<Card> tmpList = getHibernateTemplate().findByCriteria(criteria);
         if (tmpList != null && tmpList.size() > 0) {
@@ -41,6 +39,7 @@ public class HibernateShelfRepository extends HibernateBaseRepository implements
             return null;
         }
     }
+
 
     @Override
     public ShelfType loadShelfTypeById(int id) {

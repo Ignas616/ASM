@@ -3,12 +3,13 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui"
         xmlns:pm="http://primefaces.org/mobile"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
         contentType="text/html"
         renderKitId="PRIMEFACES_MOBILE">
 
     <pm:page title="ASM: Cards">
         <pm:view id="cards">
-            <pm:header title="Cards">
+            <pm:header title="Add Card to Shelf">
                 <f:facet name="left">
                     <p:commandButton value="Back" icon="back" action="back" />
                 </f:facet>
@@ -16,13 +17,21 @@
             <p:messages id="adminSaveMsg" showDetail="true" autoUpdate="true" />
             <pm:content>
                 <h:form id="cardsForm">
-                    <p:dataList value="#{shelfController.cardList}" var="card">
-                        <p:column>
-                            <p:commandLink value="#{card.name}" action="selectCard">
-                                <f:setPropertyActionListener value="#{card}" target="#{shelfController.selectedCard}" />
-                            </p:commandLink>
-                        </p:column>
-                    </p:dataList>
+                    <c:choose>
+                        <c:when test="#{not empty shelfController.cardList}">
+                            <p:dataList value="#{shelfController.cardList}" var="card">
+                                <p:column>
+                                    <p:commandLink value="#{card.name}" action="selectCard">
+                                        <f:setPropertyActionListener value="#{card}" target="#{shelfController.selectedCard}" />
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataList>
+                        </c:when>
+                        <c:otherwise>
+                            There Is no cards that could be selected
+                        </c:otherwise>
+                    </c:choose>
+
                 </h:form>
             </pm:content>
 

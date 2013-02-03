@@ -22,10 +22,10 @@ public class Shelf implements Serializable{
 	private int number;
 		
 	@OneToOne
-	@JoinColumn(name = "shelftype")
+	@JoinColumn(name = "shelf_type")
 	private ShelfType shelfType;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "shelf_card_rel", joinColumns = @JoinColumn(name = "shelf_id"), inverseJoinColumns = @JoinColumn(name = "card_id"))
     private List<Card> cardList;
 

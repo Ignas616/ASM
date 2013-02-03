@@ -25,7 +25,7 @@ public class DeviceType implements Serializable{
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "noofshelves")
+	@Column(name = "no_of_shelves")
 	private int noOfShelves;	
 
 	public int getId() {

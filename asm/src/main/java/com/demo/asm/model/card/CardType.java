@@ -18,7 +18,7 @@ public class CardType implements Serializable{
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "noofports")
+	@Column(name = "no_of_ports")
 	private int noOfPorts;
 
 	public int getId() {

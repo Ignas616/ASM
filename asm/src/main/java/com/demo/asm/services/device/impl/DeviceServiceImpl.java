@@ -3,6 +3,7 @@ package com.demo.asm.services.device.impl;
 import java.util.List;
 
 import com.demo.asm.model.device.DeviceType;
+import com.demo.asm.model.shelf.Shelf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public List<DeviceType> getAllDeviceTypes() {
       return repository.getAllDeviceTypes();
+    }
+
+    @Override
+    public List<Shelf> getAllShelvesForThisDeviceType(int deviceTypeId) {
+        return repository.getAllShelvesForThisDeviceType(deviceTypeId);
     }
 
     @Override

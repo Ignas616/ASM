@@ -14,13 +14,13 @@ public class AddressLocation extends Location implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "cityname")
+    @Column(name = "city_name")
     private String cityName;
 
-    @Column(name = "streetname")
+    @Column(name = "street_name")
     private String streetName;
 
-    @Column(name = "houseno")
+    @Column(name = "house_no")
     private String houseNo;
 
 

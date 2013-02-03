@@ -18,7 +18,7 @@ public class ShelfType implements Serializable{
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "noofallowedcardslots")
+	@Column(name = "no_of_allowed_card_slots")
 	private int noOfAllowedCardSlots;
 
 	public int getId() {

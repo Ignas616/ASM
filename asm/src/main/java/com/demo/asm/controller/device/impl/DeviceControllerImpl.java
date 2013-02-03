@@ -1,11 +1,13 @@
 package com.demo.asm.controller.device.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import com.demo.asm.model.device.DeviceType;
+import com.demo.asm.model.shelf.Shelf;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.demo.asm.controller.device.DeviceController;
@@ -26,6 +28,10 @@ public class DeviceControllerImpl implements DeviceController {
     private List<DeviceType> deviceTypeList;
 	
 	private Device selected;
+
+    private List<Shelf> shelfList;
+
+    private Shelf selectedShelf;
 
     public List<DeviceType> getDeviceTypeList() {
         return deviceTypeList;
@@ -59,9 +65,26 @@ public class DeviceControllerImpl implements DeviceController {
 		this.selected = selected;
 	}
 
-	@Override
+    public List<Shelf> getShelfList() {
+        return shelfList;
+    }
+
+    public void setShelfList(List<Shelf> shelfList) {
+        this.shelfList = shelfList;
+    }
+
+    public Shelf getSelectedShelf() {
+        return selectedShelf;
+    }
+
+    public void setSelectedShelf(Shelf selectedShelf) {
+        this.selectedShelf = selectedShelf;
+    }
+
+    @Override
 	public void createNew() {
 		Device tmpDevice = new Device();
+        tmpDevice.setShelfList(new ArrayList<Shelf>());
 		setSelected(tmpDevice);		
 	}
 
@@ -93,6 +116,35 @@ public class DeviceControllerImpl implements DeviceController {
 		setDeviceList(service.getAll());
         setDeviceTypeList(service.getAllDeviceTypes());
 	}
+
+    public void updateShelfList() {
+        setShelfList(service.getAllShelvesForThisDeviceType(selected.getDeviceType().getId()));
+    }
+
+    public boolean addSelectedShelf() {
+        if(selected.getDeviceType().getNoOfShelves()>selected.getShelfList().size()){
+            selected.getShelfList().add(selectedShelf);
+            return true;
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Maximum Number Of Cards Reached");
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+            return false;
+        }
+    }
+
+    public void removeShelfUnit() {
+        selected.getShelfList().remove(selectedShelf);
+    }
+
+    public boolean validateBeforeSave() {
+        if(selected.getShelfList() != null && selected.getShelfList().size()>0){
+            return true;
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The Device Must Have At Least 1 Shelf");
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+            return false;
+        }
+    }
 	
 	public boolean checkSelected() {
         return getSelected() != null;

@@ -24,7 +24,7 @@ public class ShelfServiceImpl implements ShelfService {
 	@Override
 	public List<Shelf> getAll() {
 		return repository.getAll(Shelf.class);
-	}
+    }
 
     @Override
     public List<Card> getAllCardsForThisShelfType(int shelfTypeId) {

@@ -11,7 +11,7 @@
 
 	<view-state id="shelf" view="shelf.xhtml">
         <transition on="back" to="homepage" />
-		<transition on="details" to="unitDetails" />
+		<transition on="details" to="preLoadNewUnit" />
 		<transition on="newUnit" to="newUnit" />
 	</view-state>
 	
@@ -19,6 +19,11 @@
 		<evaluate expression="shelfController.createNew()" />
 		<transition to="unitDetails" />
 	</action-state>
+
+    <action-state id="preLoadNewUnit">
+        <evaluate expression="shelfController.preLoad()" />
+        <transition to="unitDetails" />
+    </action-state>
 	
 	<view-state id="unitDetails" view="shelfDetails.xhtml">
 		<transition on="back" to="shelf" bind="false" />
@@ -34,7 +39,7 @@
     </action-state>
 
     <view-state id="selectCardUnit" view="card.xhtml">
-        <transition on="back" to="shelf" bind="false" />
+        <transition on="back" to="unitDetails" bind="false" />
         <transition on="selectCard" to="addSelectedCardToShelf" />
     </view-state>
 

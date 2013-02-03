@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller("shelfController")
@@ -84,6 +85,7 @@ public class ShelfControllerImpl implements ShelfController {
 	@Override
 	public void createNew() {
 		Shelf tmpShelf = new Shelf();
+        tmpShelf.setCardList(new ArrayList<Card>());
 		setSelected(tmpShelf);		
 	}
 
@@ -116,10 +118,6 @@ public class ShelfControllerImpl implements ShelfController {
         setShelfTypeList(service.getAllShelfTypes());
 	}
 
-    public void check() {
-        System.out.println(selected.getShelfType().getId());
-    }
-
     public void updateCardList() {
         setCardList(service.getAllCardsForThisShelfType(selected.getShelfType().getId()));
     }
@@ -138,7 +136,8 @@ public class ShelfControllerImpl implements ShelfController {
     public void removeCardUnit() {
         selected.getCardList().remove(selectedCard);
     }
-	
+
+
 	public boolean checkSelected() {
         return getSelected() != null;
 	}

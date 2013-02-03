@@ -1,16 +1,12 @@
 package com.demo.asm.model.device;
 
-import java.io.Serializable;
+import com.demo.asm.model.card.Card;
+import com.demo.asm.model.shelf.Shelf;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "device")
@@ -28,8 +24,12 @@ public class Device implements Serializable{
 	private String name;
 		
 	@OneToOne
-	@JoinColumn(name = "devicetype")
+	@JoinColumn(name = "device_type")
 	private DeviceType deviceType;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "device_shelf_rel", joinColumns = @JoinColumn(name = "device_id"), inverseJoinColumns = @JoinColumn(name = "shelf_id"))
+    private List<Shelf> shelfList;
 
 	public int getId() {
 		return id;
@@ -53,6 +53,13 @@ public class Device implements Serializable{
 
 	public void setDeviceType(DeviceType deviceType) {
 		this.deviceType = deviceType;
-	}	
+	}
 
+    public List<Shelf> getShelfList() {
+        return shelfList;
+    }
+
+    public void setShelfList(List<Shelf> shelfList) {
+        this.shelfList = shelfList;
+    }
 }

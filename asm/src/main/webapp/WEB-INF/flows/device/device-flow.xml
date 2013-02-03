@@ -22,13 +22,42 @@
 	
 	<view-state id="unitDetails" view="deviceDetails.xhtml">
 		<transition on="back" to="device" bind="false" />
-        <transition on="save" to="saveUnit" />
+        <transition on="addShelf" to="addShelfUnit" />
+        <transition on="removeShelf" to="removeShelf" />
+        <transition on="save" to="validateBeforeSave" />
         <transition on="delete" to="deleteUnit" />
 	</view-state>
+
+    <action-state id="validateBeforeSave">
+        <evaluate expression="deviceController.validateBeforeSave()" />
+        <transition on="yes" to="saveUnit" />
+        <transition on="no" to="unitDetails" />
+    </action-state>
+
+    <action-state id="addShelfUnit">
+        <evaluate expression="deviceController.updateShelfList()" />
+        <transition to="selectShelfUnit" />
+    </action-state>
+
+    <view-state id="selectShelfUnit" view="shelf.xhtml">
+        <transition on="back" to="unitDetails" bind="false" />
+        <transition on="selectShelf" to="addSelectedShelfToDevice" />
+    </view-state>
+
+    <action-state id="addSelectedShelfToDevice">
+        <evaluate expression="deviceController.addSelectedShelf()" />
+        <transition on="yes" to="unitDetails" />
+        <transition on="no" to="selectShelfUnit" />
+    </action-state>
+
+    <action-state id="removeShelf">
+        <evaluate expression="deviceController.removeShelfUnit()" />
+        <transition to="unitDetails" />
+    </action-state>
 	
 	<action-state id="saveUnit">
-    <evaluate expression="deviceController.save()" />
-    <transition to="start" />
+        <evaluate expression="deviceController.save()" />
+        <transition to="start" />
     </action-state>
 
     <action-state id="deleteUnit">
