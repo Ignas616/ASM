@@ -1,0 +1,35 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pm="http://primefaces.org/mobile"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+
+    <pm:page title="ASM: Location">
+        <pm:view id="details">
+            <pm:header title="Physical Locations Details">
+                <f:facet name="left">
+                    <p:commandButton value="Back" icon="back" action="back" />
+                </f:facet>
+                <f:facet name="right">
+                    <pm:buttonGroup orientation="horizontal">
+                        <p:commandButton value="Save" icon="save" action="save" />
+                        <p:commandButton value="Delete" icon="delete" action="delete"/>
+                    </pm:buttonGroup>
+                </f:facet>
+            </pm:header>
+
+            <pm:content>
+                <h:form id="devaiceDetailsForm">
+                    <p:inputText label="Name: "	value="#{physicalLocationController.selected.name}" />
+                    <p:inputText label="Coord X: "	value="#{physicalLocationController.selected.coordX}" />
+                    <p:inputText label="Coord Y: "	value="#{physicalLocationController.selected.coordY}" />
+                    <p:inputText label="Coord Z: "	value="#{physicalLocationController.selected.coordZ}" />
+                </h:form>
+            </pm:content>
+
+        </pm:view>
+    </pm:page>
+</f:view>
+

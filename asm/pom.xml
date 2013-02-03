@@ -74,6 +74,7 @@
 	</developers>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
+        <finalName>asm</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -1,7 +1,10 @@
 package com.demo.asm.model.shelf;
 
+import com.demo.asm.model.card.Card;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "shelf")
@@ -21,6 +24,10 @@ public class Shelf implements Serializable{
 	@OneToOne
 	@JoinColumn(name = "shelftype")
 	private ShelfType shelfType;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "shelf_card_rel", joinColumns = @JoinColumn(name = "shelf_id"), inverseJoinColumns = @JoinColumn(name = "card_id"))
+    private List<Card> cardList;
 
 	public int getId() {
 		return id;
@@ -44,5 +51,13 @@ public class Shelf implements Serializable{
 
     public void setShelfType(ShelfType shelfType) {
         this.shelfType = shelfType;
+    }
+
+    public List<Card> getCardList() {
+        return cardList;
+    }
+
+    public void setCardList(List<Card> cardList) {
+        this.cardList = cardList;
     }
 }

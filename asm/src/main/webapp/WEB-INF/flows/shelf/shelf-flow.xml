@@ -22,9 +22,32 @@
 	
 	<view-state id="unitDetails" view="shelfDetails.xhtml">
 		<transition on="back" to="shelf" bind="false" />
-		<transition on="save" to="saveUnit" />
-        <transition on="delete" to="deleteUnit" />
+        <transition on="addCard" to="addCardUnit" />
+        <transition on="removeCard" to="removeCardUnit" />
+        <transition on="save" to="saveUnit" />
+	    <transition on="delete" to="deleteUnit" />
 	</view-state>
+
+    <action-state id="addCardUnit">
+        <evaluate expression="shelfController.updateCardList()" />
+        <transition to="selectCardUnit" />
+    </action-state>
+
+    <view-state id="selectCardUnit" view="card.xhtml">
+        <transition on="back" to="shelf" bind="false" />
+        <transition on="selectCard" to="addSelectedCardToShelf" />
+    </view-state>
+
+    <action-state id="addSelectedCardToShelf">
+        <evaluate expression="shelfController.addSelectedCard()" />
+        <transition on="yes" to="unitDetails" />
+        <transition on="no" to="selectCardUnit" />
+    </action-state>
+
+    <action-state id="removeCardUnit">
+        <evaluate expression="shelfController.removeCardUnit()" />
+        <transition to="unitDetails" />
+    </action-state>
 	
 	<action-state id="saveUnit">
 		<evaluate expression="shelfController.save()" />

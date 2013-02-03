@@ -1,25 +1,25 @@
-package com.demo.asm.model.shelf;
+package com.demo.asm.model.card;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "shelf_type")
-@SequenceGenerator(name = "shelf_type_seq", sequenceName = "shelf_type_seq", allocationSize = 1)
-public class ShelfType implements Serializable{
+@Table(name = "card_type")
+@SequenceGenerator(name = "card_type_seq", sequenceName = "card_type_seq", allocationSize = 1)
+public class CardType implements Serializable{
 	
-	private static final long serialVersionUID = -7520724946566899973L;
+	private static final long serialVersionUID = -7520724946566388873L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="shelf_type_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="card_type_seq")
 	@Column(name = "id")
 	private int id;
 	
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "noofallowedcardslots")
-	private int noOfAllowedCardSlots;
+	@Column(name = "noofports")
+	private int noOfPorts;
 
 	public int getId() {
 		return id;
@@ -36,13 +36,12 @@ public class ShelfType implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-
-    public int getNoOfAllowedCardSlots() {
-        return noOfAllowedCardSlots;
+    public int getNoOfPorts() {
+        return noOfPorts;
     }
 
-    public void setNoOfAllowedCardSlots(int noOfAllowedCardSlots) {
-        this.noOfAllowedCardSlots = noOfAllowedCardSlots;
+    public void setNoOfPorts(int noOfPorts) {
+        this.noOfPorts = noOfPorts;
     }
 
     public int hashCode() {
@@ -60,7 +59,7 @@ public class ShelfType implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ShelfType other = (ShelfType) obj;
+        CardType other = (CardType) obj;
         if (id != other.id)
             return false;
         return true;

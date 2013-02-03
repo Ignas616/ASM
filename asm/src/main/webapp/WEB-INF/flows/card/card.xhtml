@@ -1,0 +1,36 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pm="http://primefaces.org/mobile"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+
+    <pm:page title="ASM: Cards">
+        <pm:view id="cards">
+            <pm:header title="Cards">
+                <f:facet name="left">
+                    <p:commandButton value="Back" icon="back" action="back" />
+                </f:facet>
+                <f:facet name="right">
+                    <pm:buttonGroup orientation="horizontal">
+                        <p:commandButton value="New" icon="new" action="newUnit"  />
+                    </pm:buttonGroup>
+                </f:facet>
+            </pm:header>
+            <p:messages id="adminSaveMsg" showDetail="true" autoUpdate="true" />
+            <pm:content>
+                <h:form id="cardsForm">
+                    <p:dataList value="#{cardController.cardList}" var="card">
+                        <p:column>
+                            <p:commandLink value="#{card.name}" action="details">
+                                <f:setPropertyActionListener value="#{card}" target="#{cardController.selected}" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataList>
+                </h:form>
+            </pm:content>
+
+        </pm:view>
+    </pm:page>
+</f:view>

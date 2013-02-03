@@ -1,5 +1,6 @@
 package com.demo.asm.services.shelf.impl;
 
+import com.demo.asm.model.card.Card;
 import com.demo.asm.model.shelf.Shelf;
 import com.demo.asm.model.shelf.ShelfType;
 import com.demo.asm.repository.asm.shelf.ShelfRepository;
@@ -24,6 +25,11 @@ public class ShelfServiceImpl implements ShelfService {
 	public List<Shelf> getAll() {
 		return repository.getAll(Shelf.class);
 	}
+
+    @Override
+    public List<Card> getAllCardsForThisShelfType(int shelfTypeId) {
+        return repository.getAllCardsForThisShelfType(shelfTypeId);
+    }
 
     @Override
     public List<ShelfType> getAllShelfTypes() {

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow  
+    http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<action-state id="start">
+		<evaluate expression="addressLocationController.updateData()" />
+		<transition to="addressLocation" />
+	</action-state>
+
+	<view-state id="addressLocation" view="addressLocation.xhtml">
+        <transition on="back" to="homepage" />
+		<transition on="details" to="unitDetails" />
+		<transition on="newUnit" to="newUnit" />
+	</view-state>
+	
+	<action-state id="newUnit">
+		<evaluate expression="addressLocationController.createNew()" />
+		<transition to="unitDetails" />
+	</action-state>
+	
+	<view-state id="unitDetails" view="addressLocationDetails.xhtml">
+		<transition on="back" to="addressLocation" bind="false" />
+        <transition on="save" to="saveUnit" />
+        <transition on="delete" to="deleteUnit" />
+	</view-state>
+	
+	<action-state id="saveUnit">
+    <evaluate expression="addressLocationController.save()" />
+    <transition to="start" />
+    </action-state>
+
+    <action-state id="deleteUnit">
+        <evaluate expression="addressLocationController.delete()" />
+        <transition to="start" />
+    </action-state>
+
+    <end-state id="homepage" view="externalRedirect:contextRelative:/app/location" />
+</flow>
