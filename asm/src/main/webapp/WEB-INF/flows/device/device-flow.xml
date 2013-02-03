@@ -26,7 +26,34 @@
         <transition on="removeShelf" to="removeShelf" />
         <transition on="save" to="validateBeforeSave" />
         <transition on="delete" to="deleteUnit" />
+        <transition on="physical" to="addPhysicalLocation" />
+        <transition on="address" to="addAddressLocation" />
 	</view-state>
+
+    <action-state id="addPhysicalLocation">
+        <evaluate expression="deviceController.getPhysicalLocations()" />
+        <transition to="physicalLocationUnit" />
+    </action-state>
+
+    <view-state id="physicalLocationUnit" view="physicalLocation.xhtml">
+        <transition on="back" to="unitDetails" bind="false" />
+        <transition on="addLocation" to="addSelectedLocation" />
+    </view-state>
+
+    <action-state id="addAddressLocation">
+        <evaluate expression="deviceController.getAddressLocations()" />
+        <transition to="addressLocationUnit" />
+    </action-state>
+
+    <view-state id="addressLocationUnit" view="addressLocation.xhtml">
+        <transition on="back" to="unitDetails" bind="false" />
+        <transition on="addLocation" to="addSelectedLocation" />
+    </view-state>
+
+    <action-state id="addSelectedLocation">
+        <evaluate expression="deviceController.addSelectedLocation()" />
+        <transition to="unitDetails" />
+    </action-state>
 
     <action-state id="validateBeforeSave">
         <evaluate expression="deviceController.validateBeforeSave()" />

@@ -1,6 +1,8 @@
 package com.demo.asm.model.device;
 
 import com.demo.asm.model.card.Card;
+import com.demo.asm.model.location.AddressLocation;
+import com.demo.asm.model.location.PhysicalLocation;
 import com.demo.asm.model.shelf.Shelf;
 
 import java.io.Serializable;
@@ -22,10 +24,18 @@ public class Device implements Serializable{
 	
 	@Column(name = "name")
 	private String name;
+
+    @OneToOne
+    @JoinColumn(name = "device_type")
+    private DeviceType deviceType;
+
+    @OneToOne
+    @JoinColumn(name = "address_location_id")
+    private AddressLocation addessLocation;
 		
 	@OneToOne
-	@JoinColumn(name = "device_type")
-	private DeviceType deviceType;
+	@JoinColumn(name = "physical_location_id")
+	private PhysicalLocation physicalLocation;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "device_shelf_rel", joinColumns = @JoinColumn(name = "device_id"), inverseJoinColumns = @JoinColumn(name = "shelf_id"))
@@ -61,5 +71,21 @@ public class Device implements Serializable{
 
     public void setShelfList(List<Shelf> shelfList) {
         this.shelfList = shelfList;
+    }
+
+    public AddressLocation getAddessLocation() {
+        return addessLocation;
+    }
+
+    public void setAddessLocation(AddressLocation addessLocation) {
+        this.addessLocation = addessLocation;
+    }
+
+    public PhysicalLocation getPhysicalLocation() {
+        return physicalLocation;
+    }
+
+    public void setPhysicalLocation(PhysicalLocation physicalLocation) {
+        this.physicalLocation = physicalLocation;
     }
 }

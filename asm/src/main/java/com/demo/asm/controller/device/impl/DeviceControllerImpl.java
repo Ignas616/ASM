@@ -7,7 +7,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import com.demo.asm.model.device.DeviceType;
+import com.demo.asm.model.location.AddressLocation;
+import com.demo.asm.model.location.PhysicalLocation;
 import com.demo.asm.model.shelf.Shelf;
+import com.demo.asm.services.location.AddressLocationService;
+import com.demo.asm.services.location.PhysicalLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.demo.asm.controller.device.DeviceController;
@@ -22,6 +26,12 @@ public class DeviceControllerImpl implements DeviceController {
 
 	@Autowired
 	private DeviceService service;
+
+    @Autowired
+    private PhysicalLocationService physicalService;
+
+    @Autowired
+    private AddressLocationService addressService;
 	
 	private List<Device> deviceList;
 
@@ -33,6 +43,48 @@ public class DeviceControllerImpl implements DeviceController {
 
     private Shelf selectedShelf;
 
+    private List<PhysicalLocation> physicalLocationList;
+
+    private PhysicalLocation selectedPhysicalLocation;
+
+    private List<AddressLocation> addressLocationList;
+
+    private AddressLocation selectedAddressLocation;
+
+
+
+    public DeviceService getService() {
+        return service;
+    }
+
+    public void setService(DeviceService service) {
+        this.service = service;
+    }
+
+    public PhysicalLocationService getPhysicalService() {
+        return physicalService;
+    }
+
+    public void setPhysicalService(PhysicalLocationService physicalService) {
+        this.physicalService = physicalService;
+    }
+
+    public AddressLocationService getAddressService() {
+        return addressService;
+    }
+
+    public void setAddressService(AddressLocationService addressService) {
+        this.addressService = addressService;
+    }
+
+    public List<Device> getDeviceList() {
+        return deviceList;
+    }
+
+    public void setDeviceList(List<Device> deviceList) {
+        this.deviceList = deviceList;
+    }
+
     public List<DeviceType> getDeviceTypeList() {
         return deviceTypeList;
     }
@@ -41,29 +93,13 @@ public class DeviceControllerImpl implements DeviceController {
         this.deviceTypeList = deviceTypeList;
     }
 
-    public DeviceService getService() {
-		return service;
-	}
+    public Device getSelected() {
+        return selected;
+    }
 
-	public void setService(DeviceService service) {
-		this.service = service;
-	}
-	
-	public List<Device> getDeviceList() {
-		return deviceList;
-	}
-
-	public void setDeviceList(List<Device> deviceList) {
-		this.deviceList = deviceList;
-	}
-
-	public Device getSelected() {
-		return selected;
-	}
-
-	public void setSelected(Device selected) {
-		this.selected = selected;
-	}
+    public void setSelected(Device selected) {
+        this.selected = selected;
+    }
 
     public List<Shelf> getShelfList() {
         return shelfList;
@@ -79,6 +115,38 @@ public class DeviceControllerImpl implements DeviceController {
 
     public void setSelectedShelf(Shelf selectedShelf) {
         this.selectedShelf = selectedShelf;
+    }
+
+    public List<PhysicalLocation> getPhysicalLocationList() {
+        return physicalLocationList;
+    }
+
+    public void setPhysicalLocationList(List<PhysicalLocation> physicalLocationList) {
+        this.physicalLocationList = physicalLocationList;
+    }
+
+    public PhysicalLocation getSelectedPhysicalLocation() {
+        return selectedPhysicalLocation;
+    }
+
+    public void setSelectedPhysicalLocation(PhysicalLocation selectedPhysicalLocation) {
+        this.selectedPhysicalLocation = selectedPhysicalLocation;
+    }
+
+    public List<AddressLocation> getAddressLocationList() {
+        return addressLocationList;
+    }
+
+    public void setAddressLocationList(List<AddressLocation> addressLocationList) {
+        this.addressLocationList = addressLocationList;
+    }
+
+    public AddressLocation getSelectedAddressLocation() {
+        return selectedAddressLocation;
+    }
+
+    public void setSelectedAddressLocation(AddressLocation selectedAddressLocation) {
+        this.selectedAddressLocation = selectedAddressLocation;
     }
 
     @Override
@@ -134,6 +202,21 @@ public class DeviceControllerImpl implements DeviceController {
 
     public void removeShelfUnit() {
         selected.getShelfList().remove(selectedShelf);
+    }
+
+    public void getPhysicalLocations(){
+        setPhysicalLocationList(physicalService.getAll());
+    }
+
+    public void getAddressLocations(){
+        setAddressLocationList(addressService.getAll());
+    }
+
+    public void addSelectedLocation(){
+        selected.setAddessLocation(getSelectedAddressLocation());
+        selected.setPhysicalLocation(getSelectedPhysicalLocation());
+        setSelectedAddressLocation(null);
+        setSelectedPhysicalLocation(null);
     }
 
     public boolean validateBeforeSave() {
