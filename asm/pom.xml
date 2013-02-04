@@ -11,6 +11,7 @@
 		<env>demo</env>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<webflow.version>2.2.0.RELEASE</webflow.version>
+        <ws.version>2.1.0.RELEASE</ws.version>
 	</properties>
 
 	<pluginRepositories>
@@ -131,6 +132,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-core</artifactId>
+            <version>${ws.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>ognl</groupId>
 			<artifactId>ognl</artifactId>

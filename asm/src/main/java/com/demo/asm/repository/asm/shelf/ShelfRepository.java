@@ -12,6 +12,8 @@ public interface ShelfRepository extends BaseRepository {
 
    public List<Card> getAllCardsForThisShelfType(int shelfTypeId);
 
+   public List<Card> getAllCardsForThisShelfId(int shelfId);
+
    public ShelfType loadShelfTypeById(int id);
 
 }

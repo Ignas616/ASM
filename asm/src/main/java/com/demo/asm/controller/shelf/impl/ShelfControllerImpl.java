@@ -123,6 +123,7 @@ public class ShelfControllerImpl implements ShelfController {
     }
 
     public boolean addSelectedCard() {
+
         if(selected.getShelfType().getNoOfAllowedCardSlots()>selected.getCardList().size()){
             selected.getCardList().add(selectedCard);
             return true;
@@ -135,6 +136,13 @@ public class ShelfControllerImpl implements ShelfController {
 
     public void removeCardUnit() {
         selected.getCardList().remove(selectedCard);
+    }
+
+    public void preLoad() {
+       selected.setCardList(service.getAllCardsForThisShelfId(selected.getId()));
+       if(selected.getCardList() == null){
+          selected.setCardList(new ArrayList<Card>());
+       }
     }
 
 

@@ -32,6 +32,11 @@ public class ShelfServiceImpl implements ShelfService {
     }
 
     @Override
+    public List<Card> getAllCardsForThisShelfId(int shelfId) {
+        return repository.getAllCardsForThisShelfId(shelfId);
+    }
+
+    @Override
     public List<ShelfType> getAllShelfTypes() {
       return repository.getAllShelfTypes();
     }

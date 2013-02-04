@@ -40,6 +40,20 @@ public class HibernateShelfRepository extends HibernateBaseRepository implements
         }
     }
 
+    @Override
+    public List<Card> getAllCardsForThisShelfId(int shelfId) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Card.class);
+
+        criteria.add(Restrictions.eq("shelf.id", shelfId));
+
+        List<Card> tmpList = getHibernateTemplate().findByCriteria(criteria);
+        if (tmpList != null && tmpList.size() > 0) {
+            return tmpList;
+        } else {
+            return null;
+        }
+    }
+
 
     @Override
     public ShelfType loadShelfTypeById(int id) {

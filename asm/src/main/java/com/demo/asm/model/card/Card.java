@@ -1,5 +1,7 @@
 package com.demo.asm.model.card;
 
+import com.demo.asm.model.shelf.Shelf;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -21,6 +23,10 @@ public class Card implements Serializable{
 	@OneToOne
 	@JoinColumn(name = "card_type")
 	private CardType cardType;
+
+    @ManyToOne
+    @JoinTable(name = "shelf_card_rel", joinColumns = @JoinColumn(name = "card_id"), inverseJoinColumns = @JoinColumn(name = "shelf_id"))
+    private Shelf shelf;
 
 	public int getId() {
 		return id;

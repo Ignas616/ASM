@@ -17,11 +17,13 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset1" name="XML Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/context/spring-converters.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/context/spring-services.xml</file>
-          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring/app-config.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring/webflow-config.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/context/context.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/context/spring-controllers.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring/app-config.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/context/spring-repositories.xml</file>
-          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/context/webflow-config.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -44,7 +46,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:3.0.5.RELEASE" level="project" />
@@ -57,6 +59,12 @@
     <orderEntry type="library" name="Maven: org.springframework.webflow:spring-js:2.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.webflow:spring-js-resources:2.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.webflow:spring-webflow:2.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.ws:spring-ws-core:2.1.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.ws:spring-xml:2.1.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-oxm:3.1.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.3" level="project" />
+    <orderEntry type="library" name="Maven: wsdl4j:wsdl4j:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: ognl:ognl:3.0" level="project" />
     <orderEntry type="library" name="Maven: commons-dbcp:commons-dbcp:1.2.2" level="project" />
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.3" level="project" />
@@ -75,7 +83,6 @@
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-validator:4.0.2.GA" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.0.0.GA" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.1.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-simple:1.6.1" level="project" />
@@ -83,7 +90,6 @@
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-impl:2.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:3.4.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:el-api:6.0.29" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: hsqldb:hsqldb:1.8.0.7" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi:3.2-FINAL" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-support:2.0.8" level="project" />
