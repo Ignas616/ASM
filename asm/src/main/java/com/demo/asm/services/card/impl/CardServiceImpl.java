@@ -2,6 +2,7 @@ package com.demo.asm.services.card.impl;
 
 import com.demo.asm.model.card.Card;
 import com.demo.asm.model.card.CardType;
+import com.demo.asm.model.report.CardTypeReport;
 import com.demo.asm.repository.asm.card.CardRepository;
 import com.demo.asm.services.card.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class CardServiceImpl implements CardService {
     @Override
     public List<CardType> getAllCardTypes() {
       return repository.getAllCardTypes();
+    }
+
+    @Override
+    public List<CardTypeReport> getCardTypeReport(int cardTypeId) {
+        return repository.getCardTypeReport(cardTypeId);
     }
 
     @Override

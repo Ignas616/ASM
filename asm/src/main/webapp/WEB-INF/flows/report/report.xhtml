@@ -1,0 +1,62 @@
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pm="http://primefaces.org/mobile"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+        xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+        contentType="text/html"
+        renderKitId="PRIMEFACES_MOBILE">
+
+    <pm:page title="ASM: Report">
+        <pm:view id="cards">
+            <pm:header title="Card Types">
+                <f:facet name="left">
+                    <p:commandButton value="Back" icon="back" action="back"/>
+                </f:facet>
+            </pm:header>
+            <p:messages id="adminSaveMsg" showDetail="true" autoUpdate="true"/>
+            <pm:content>
+                <h:form id="cardsForm">
+                    <p:dataList value="#{reportController.cardTypeReportListArray}" var="cardReportList">
+                        <p:panel header="Device Type Name: #{cardReportList.cardType.name}" collapsed="true">
+                            <p:dataList value="#{cardReportList.addressLocationReportList}"
+                                        var="addressLocationReportList">
+                                <p:panel
+                                        header="Address location name: #{addressLocationReportList.addressLocation.name} - count: #{addressLocationReportList.count}"
+                                        collapsed="true">
+                                    <h:outputText
+                                            value="City: #{addressLocationReportList.addressLocation.cityName}"/><br/>
+                                    <h:outputText
+                                            value="Street: #{addressLocationReportList.addressLocation.streetName}"/>
+                                    <br/>
+                                    <h:outputText value="House: #{addressLocationReportList.addressLocation.houseNo}"/>
+                                </p:panel>
+                            </p:dataList>
+                            <p:dataList value="#{cardReportList.physicalLocationReportList}"
+                                        var="physicalLocationReportList">
+                                <p:panel
+                                        header="Physical location name: #{physicalLocationReportList.physicalLocation.name} - count: #{physicalLocationReportList.count}"
+                                        collapsed="true">
+                                    <h:outputText
+                                            value="CoordX: #{physicalLocationReportList.physicalLocation.coordX}"/><br/>
+                                    <h:outputText
+                                            value="CoordY: #{physicalLocationReportList.physicalLocation.coordY}"/>
+                                    <br/>
+                                    <h:outputText
+                                            value="CoordZ: #{physicalLocationReportList.physicalLocation.coordZ}"/>
+                                </p:panel>
+                            </p:dataList>
+
+                            <c:if test="${fn:length(cardReportList.addressLocationReportList) == 0}">
+                                <c:if test="${fn:length(cardReportList.physicalLocationReportList) == 0}">
+                                    <h:outputText value="No locations are assigned to this card type"/><br/>
+                                </c:if>
+                            </c:if>
+                        </p:panel>
+                    </p:dataList>
+                </h:form>
+            </pm:content>
+        </pm:view>
+    </pm:page>
+</f:view>
