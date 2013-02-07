@@ -16,14 +16,14 @@ import java.util.List;
 @Scope("session")
 public class CardControllerImpl implements CardController {
 
-	@Autowired
-	private CardService service;
-	
-	private List<Card> cardList;
+    @Autowired
+    private CardService service;
+
+    private List<Card> cardList;
 
     private List<CardType> cardTypeList;
-	
-	private Card selected;
+
+    private Card selected;
 
     public List<CardType> getCardTypeList() {
         return cardTypeList;
@@ -34,46 +34,46 @@ public class CardControllerImpl implements CardController {
     }
 
     public CardService getService() {
-		return service;
-	}
+        return service;
+    }
 
-	public void setService(CardService service) {
-		this.service = service;
-	}
-	
-	public List<Card> getCardList() {
-		return cardList;
-	}
+    public void setService(CardService service) {
+        this.service = service;
+    }
 
-	public void setCardList(List<Card> cardList) {
-		this.cardList = cardList;
-	}
+    public List<Card> getCardList() {
+        return cardList;
+    }
 
-	public Card getSelected() {
-		return selected;
-	}
+    public void setCardList(List<Card> cardList) {
+        this.cardList = cardList;
+    }
 
-	public void setSelected(Card selected) {
-		this.selected = selected;
-	}
+    public Card getSelected() {
+        return selected;
+    }
 
-	@Override
-	public void createNew() {
-		Card tmpCard = new Card();
-		setSelected(tmpCard);
-	}
+    public void setSelected(Card selected) {
+        this.selected = selected;
+    }
 
-	@Override
-	public void save() {
+    @Override
+    public void createNew() {
+        Card tmpCard = new Card();
+        setSelected(tmpCard);
+    }
+
+    @Override
+    public void save() {
         try {
             service.save(getSelected());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		}
-	}
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        }
+    }
 
     @Override
     public void delete() {
@@ -88,12 +88,12 @@ public class CardControllerImpl implements CardController {
     }
 
     public void updateData() {
-		setCardList(service.getAll());
+        setCardList(service.getAll());
         setCardTypeList(service.getAllCardTypes());
-	}
-	
-	public boolean checkSelected() {
+    }
+
+    public boolean checkSelected() {
         return getSelected() != null;
-	}
+    }
 
 }

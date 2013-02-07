@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class HibernateAddressLocationRepository extends HibernateBaseRepository implements AddressLocationRepository {
-	
 
-	
+
 }

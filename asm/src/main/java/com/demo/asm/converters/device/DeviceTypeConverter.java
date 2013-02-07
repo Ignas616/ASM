@@ -18,7 +18,7 @@ public class DeviceTypeConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent arg1, String value) {
-         try {
+        try {
             return repository.loadDeviceTypeById(Integer.parseInt(value));
         } catch (NumberFormatException e) {
             return null;
@@ -28,7 +28,7 @@ public class DeviceTypeConverter implements Converter {
     @Override
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         if (value instanceof DeviceType) {
-            return String.valueOf(((DeviceType)value).getId());
+            return String.valueOf(((DeviceType) value).getId());
         } else {
             return null;
         }

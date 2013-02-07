@@ -15,54 +15,54 @@ import java.util.List;
 @Scope("session")
 public class PhysicalLocationControllerImpl implements PhysicalLocationController {
 
-	@Autowired
-	private PhysicalLocationService service;
-	
-	private List<PhysicalLocation> physicalLocationList;
+    @Autowired
+    private PhysicalLocationService service;
 
-	private PhysicalLocation selected;
+    private List<PhysicalLocation> physicalLocationList;
+
+    private PhysicalLocation selected;
 
     public PhysicalLocationService getService() {
-		return service;
-	}
+        return service;
+    }
 
-	public void setService(PhysicalLocationService service) {
-		this.service = service;
-	}
-	
-	public List<PhysicalLocation> getPhysicalLocationList() {
-		return physicalLocationList;
-	}
+    public void setService(PhysicalLocationService service) {
+        this.service = service;
+    }
 
-	public void setPhysicalLocationList(List<PhysicalLocation> physicalLocationList) {
-		this.physicalLocationList = physicalLocationList;
-	}
+    public List<PhysicalLocation> getPhysicalLocationList() {
+        return physicalLocationList;
+    }
 
-	public PhysicalLocation getSelected() {
-		return selected;
-	}
+    public void setPhysicalLocationList(List<PhysicalLocation> physicalLocationList) {
+        this.physicalLocationList = physicalLocationList;
+    }
 
-	public void setSelected(PhysicalLocation selected) {
-		this.selected = selected;
-	}
+    public PhysicalLocation getSelected() {
+        return selected;
+    }
 
-	@Override
-	public void createNew() {
-		PhysicalLocation tmpPhysicalLocation = new PhysicalLocation();
-		setSelected(tmpPhysicalLocation);		
-	}
+    public void setSelected(PhysicalLocation selected) {
+        this.selected = selected;
+    }
 
-	@Override
-	public void save() {
+    @Override
+    public void createNew() {
+        PhysicalLocation tmpPhysicalLocation = new PhysicalLocation();
+        setSelected(tmpPhysicalLocation);
+    }
+
+    @Override
+    public void save() {
         try {
             service.save(getSelected());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		}
-	}
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        }
+    }
 
     @Override
     public void delete() {
@@ -77,11 +77,11 @@ public class PhysicalLocationControllerImpl implements PhysicalLocationControlle
     }
 
     public void updateData() {
-		setPhysicalLocationList(service.getAll());
-	}
-	
-	public boolean checkSelected() {
+        setPhysicalLocationList(service.getAll());
+    }
+
+    public boolean checkSelected() {
         return getSelected() != null;
-	}
+    }
 
 }

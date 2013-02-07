@@ -18,14 +18,14 @@ import java.util.List;
 @Scope("session")
 public class ShelfControllerImpl implements ShelfController {
 
-	@Autowired
-	private ShelfService service;
-	
-	private List<Shelf> shelfList;
+    @Autowired
+    private ShelfService service;
+
+    private List<Shelf> shelfList;
 
     private List<ShelfType> shelfTypeList;
-	
-	private Shelf selected;
+
+    private Shelf selected;
 
     private List<Card> cardList;
 
@@ -35,12 +35,12 @@ public class ShelfControllerImpl implements ShelfController {
     }
 
     public ShelfService getService() {
-		return service;
-	}
+        return service;
+    }
 
-	public void setService(ShelfService service) {
-		this.service = service;
-	}
+    public void setService(ShelfService service) {
+        this.service = service;
+    }
 
     public List<Shelf> getShelfList() {
         return shelfList;
@@ -75,35 +75,36 @@ public class ShelfControllerImpl implements ShelfController {
     }
 
     public Shelf getSelected() {
-		return selected;
-	}
+        return selected;
+    }
 
-	public void setSelected(Shelf selected) {
-		this.selected = selected;
-	}
+    public void setSelected(Shelf selected) {
+        this.selected = selected;
+    }
 
-	@Override
-	public void createNew() {
-		Shelf tmpShelf = new Shelf();
+    @Override
+    public void createNew() {
+        Shelf tmpShelf = new Shelf();
         tmpShelf.setCardList(new ArrayList<Card>());
-		setSelected(tmpShelf);		
-	}
+        setSelected(tmpShelf);
+    }
 
-	@Override
-	public void save() {
+    @Override
+    public void save() {
         try {
             service.save(getSelected());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		}
-	}
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        }
+    }
 
     @Override
     public void delete() {
         try {
+            getSelected().setCardList(null);
             service.delete(getSelected());
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Deleted", "Data Removed");
             FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
@@ -114,9 +115,9 @@ public class ShelfControllerImpl implements ShelfController {
     }
 
     public void updateData() {
-		setShelfList(service.getAll());
+        setShelfList(service.getAll());
         setShelfTypeList(service.getAllShelfTypes());
-	}
+    }
 
     public void updateCardList() {
         setCardList(service.getAllCardsForThisShelfType(selected.getShelfType().getId()));
@@ -124,7 +125,7 @@ public class ShelfControllerImpl implements ShelfController {
 
     public boolean addSelectedCard() {
 
-        if(selected.getShelfType().getNoOfAllowedCardSlots()>selected.getCardList().size()){
+        if (selected.getShelfType().getNoOfAllowedCardSlots() > selected.getCardList().size()) {
             selected.getCardList().add(selectedCard);
             return true;
         } else {
@@ -139,15 +140,26 @@ public class ShelfControllerImpl implements ShelfController {
     }
 
     public void preLoad() {
-       selected.setCardList(service.getAllCardsForThisShelfId(selected.getId()));
-       if(selected.getCardList() == null){
-          selected.setCardList(new ArrayList<Card>());
-       }
+        selected.setCardList(service.getAllCardsForThisShelfId(selected.getId()));
+        if (selected.getCardList() == null) {
+            selected.setCardList(new ArrayList<Card>());
+        }
+    }
+
+    public boolean validateBeforeSave() {
+        for(Card card: selected.getCardList()){
+            if (card.getShelf() != null && card.getShelf().getId() != selected.getId()){
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "This card is already in use: "+ card.getName()+" on the shelf: "+card.getShelf().getNumber());
+                FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+                return false;
+            }
+        }
+            return true;
     }
 
 
-	public boolean checkSelected() {
+    public boolean checkSelected() {
         return getSelected() != null;
-	}
+    }
 
 }

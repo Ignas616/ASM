@@ -1,6 +1,9 @@
 package com.demo.asm.model.shelf;
 
 import com.demo.asm.model.card.Card;
+import com.demo.asm.model.device.Device;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,8 +29,12 @@ public class Shelf implements Serializable{
 	private ShelfType shelfType;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "shelf_card_rel", joinColumns = @JoinColumn(name = "shelf_id"), inverseJoinColumns = @JoinColumn(name = "card_id"))
+    @JoinColumn(name="shelf_id")
     private List<Card> cardList;
+
+    @ManyToOne
+    @JoinColumn(name="device_id")
+    private Device device;
 
 	public int getId() {
 		return id;
@@ -59,5 +66,13 @@ public class Shelf implements Serializable{
 
     public void setCardList(List<Card> cardList) {
         this.cardList = cardList;
+    }
+
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
     }
 }

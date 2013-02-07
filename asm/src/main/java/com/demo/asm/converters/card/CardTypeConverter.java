@@ -18,7 +18,7 @@ public class CardTypeConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent arg1, String value) {
-         try {
+        try {
             return repository.loadCardTypeById(Integer.parseInt(value));
         } catch (NumberFormatException e) {
             return null;
@@ -28,7 +28,7 @@ public class CardTypeConverter implements Converter {
     @Override
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         if (value instanceof CardType) {
-            return String.valueOf(((CardType)value).getId());
+            return String.valueOf(((CardType) value).getId());
         } else {
             return null;
         }

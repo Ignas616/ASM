@@ -1,19 +1,15 @@
 package com.demo.asm.repository.asm.device.impl;
 
-import com.demo.asm.model.card.Card;
-import com.demo.asm.model.device.Device;
 import com.demo.asm.model.device.DeviceAllowedCardType;
 import com.demo.asm.model.device.DeviceType;
 import com.demo.asm.model.shelf.Shelf;
-import com.demo.asm.model.shelf.ShelfAllowedCardType;
 import com.demo.asm.repository.asm.device.DeviceRepository;
+import com.demo.asm.repository.impl.HibernateBaseRepository;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 import org.springframework.stereotype.Repository;
-
-import com.demo.asm.repository.impl.HibernateBaseRepository;
 
 import java.util.List;
 
@@ -44,8 +40,6 @@ public class HibernateDeviceRepository extends HibernateBaseRepository implement
             return null;
         }
     }
-
-
 
 
     @Override

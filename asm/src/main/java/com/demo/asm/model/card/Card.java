@@ -25,7 +25,7 @@ public class Card implements Serializable{
 	private CardType cardType;
 
     @ManyToOne
-    @JoinTable(name = "shelf_card_rel", joinColumns = @JoinColumn(name = "card_id"), inverseJoinColumns = @JoinColumn(name = "shelf_id"))
+    @JoinColumn(name="shelf_id")
     private Shelf shelf;
 
 	public int getId() {
@@ -50,5 +50,13 @@ public class Card implements Serializable{
 
     public void setCardType(CardType cardType) {
         this.cardType = cardType;
+    }
+
+    public Shelf getShelf() {
+        return shelf;
+    }
+
+    public void setShelf(Shelf shelf) {
+        this.shelf = shelf;
     }
 }

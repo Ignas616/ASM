@@ -4,6 +4,8 @@ import com.demo.asm.model.card.Card;
 import com.demo.asm.model.location.AddressLocation;
 import com.demo.asm.model.location.PhysicalLocation;
 import com.demo.asm.model.shelf.Shelf;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -38,7 +40,7 @@ public class Device implements Serializable{
 	private PhysicalLocation physicalLocation;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "device_shelf_rel", joinColumns = @JoinColumn(name = "device_id"), inverseJoinColumns = @JoinColumn(name = "shelf_id"))
+    @JoinColumn(name = "device_id")
     private List<Shelf> shelfList;
 
 	public int getId() {
@@ -88,4 +90,6 @@ public class Device implements Serializable{
     public void setPhysicalLocation(PhysicalLocation physicalLocation) {
         this.physicalLocation = physicalLocation;
     }
+
+
 }

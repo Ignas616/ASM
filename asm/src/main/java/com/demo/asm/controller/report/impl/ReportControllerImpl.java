@@ -5,7 +5,6 @@ import com.demo.asm.model.card.CardType;
 import com.demo.asm.model.report.AddressLocationReport;
 import com.demo.asm.model.report.CardTypeReport;
 import com.demo.asm.model.report.CardTypeReportList;
-import com.demo.asm.model.report.CardTypeReportList;
 import com.demo.asm.model.report.PhysicalLocationReport;
 import com.demo.asm.services.card.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +51,14 @@ public class ReportControllerImpl implements ReportController {
 
             List<CardTypeReport> cardTypeReports = service.getCardTypeReport(cardType.getId());
             for (CardTypeReport cardTypeReport : cardTypeReports) {
-                if(cardTypeReport.getAddressLocation() != null){
-                    AddressLocationReport addressLocationReport=  new AddressLocationReport();
+                if (cardTypeReport.getAddressLocation() != null) {
+                    AddressLocationReport addressLocationReport = new AddressLocationReport();
                     addressLocationReport.setAddressLocation(cardTypeReport.getAddressLocation());
                     addressLocationReport.setCount(cardTypeReport.getCount());
                     cardTypeReportList.getAddressLocationReportList().add(addressLocationReport);
                 }
-                if(cardTypeReport.getPhysicalLocation() != null){
-                    PhysicalLocationReport physicalLocationReport =  new PhysicalLocationReport();
+                if (cardTypeReport.getPhysicalLocation() != null) {
+                    PhysicalLocationReport physicalLocationReport = new PhysicalLocationReport();
                     physicalLocationReport.setPhysicalLocation(cardTypeReport.getPhysicalLocation());
                     physicalLocationReport.setCount(cardTypeReport.getCount());
                     cardTypeReportList.getPhysicalLocationReportList().add(physicalLocationReport);

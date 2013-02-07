@@ -15,54 +15,54 @@ import java.util.List;
 @Scope("session")
 public class AddressLocationControllerImpl implements AddressLocationController {
 
-	@Autowired
-	private AddressLocationService service;
-	
-	private List<AddressLocation> addressLocationList;
+    @Autowired
+    private AddressLocationService service;
 
-	private AddressLocation selected;
+    private List<AddressLocation> addressLocationList;
+
+    private AddressLocation selected;
 
     public AddressLocationService getService() {
-		return service;
-	}
+        return service;
+    }
 
-	public void setService(AddressLocationService service) {
-		this.service = service;
-	}
-	
-	public List<AddressLocation> getAddressLocationList() {
-		return addressLocationList;
-	}
+    public void setService(AddressLocationService service) {
+        this.service = service;
+    }
 
-	public void setAddressLocationList(List<AddressLocation> addressLocationList) {
-		this.addressLocationList = addressLocationList;
-	}
+    public List<AddressLocation> getAddressLocationList() {
+        return addressLocationList;
+    }
 
-	public AddressLocation getSelected() {
-		return selected;
-	}
+    public void setAddressLocationList(List<AddressLocation> addressLocationList) {
+        this.addressLocationList = addressLocationList;
+    }
 
-	public void setSelected(AddressLocation selected) {
-		this.selected = selected;
-	}
+    public AddressLocation getSelected() {
+        return selected;
+    }
 
-	@Override
-	public void createNew() {
-		AddressLocation tmpAddressLocation = new AddressLocation();
-		setSelected(tmpAddressLocation);		
-	}
+    public void setSelected(AddressLocation selected) {
+        this.selected = selected;
+    }
 
-	@Override
-	public void save() {
+    @Override
+    public void createNew() {
+        AddressLocation tmpAddressLocation = new AddressLocation();
+        setSelected(tmpAddressLocation);
+    }
+
+    @Override
+    public void save() {
         try {
             service.save(getSelected());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		}
-	}
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        }
+    }
 
     @Override
     public void delete() {
@@ -77,11 +77,11 @@ public class AddressLocationControllerImpl implements AddressLocationController 
     }
 
     public void updateData() {
-		setAddressLocationList(service.getAll());
-	}
-	
-	public boolean checkSelected() {
+        setAddressLocationList(service.getAll());
+    }
+
+    public boolean checkSelected() {
         return getSelected() != null;
-	}
+    }
 
 }

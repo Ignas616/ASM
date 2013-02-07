@@ -29,9 +29,15 @@
 		<transition on="back" to="shelf" bind="false" />
         <transition on="addCard" to="addCardUnit" />
         <transition on="removeCard" to="removeCardUnit" />
-        <transition on="save" to="saveUnit" />
+        <transition on="save" to="validateBeforeSave" />
 	    <transition on="delete" to="deleteUnit" />
 	</view-state>
+
+    <action-state id="validateBeforeSave">
+        <evaluate expression="shelfController.validateBeforeSave()" />
+        <transition on="yes" to="saveUnit" />
+        <transition on="no" to="unitDetails" />
+    </action-state>
 
     <action-state id="addCardUnit">
         <evaluate expression="shelfController.updateCardList()" />

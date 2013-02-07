@@ -13,22 +13,22 @@ import java.util.List;
 @Service("cardService")
 public class CardServiceImpl implements CardService {
 
-	@Autowired
-	private CardRepository repository;
+    @Autowired
+    private CardRepository repository;
 
-	@Override
-	public Card getById(int id) {
-		return repository.get(Card.class, id);
-	}
+    @Override
+    public Card getById(int id) {
+        return repository.get(Card.class, id);
+    }
 
-	@Override
-	public List<Card> getAll() {
-		return repository.getAll(Card.class);
-	}
+    @Override
+    public List<Card> getAll() {
+        return repository.getAll(Card.class);
+    }
 
     @Override
     public List<CardType> getAllCardTypes() {
-      return repository.getAllCardTypes();
+        return repository.getAllCardTypes();
     }
 
     @Override
@@ -37,9 +37,9 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-	public void save(Card toSave) {
-		repository.save(toSave);
-	}
+    public void save(Card toSave) {
+        repository.save(toSave);
+    }
 
     @Override
     public void delete(Card toDelete) {

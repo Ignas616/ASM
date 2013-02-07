@@ -13,17 +13,17 @@ import java.util.List;
 @Service("shelfService")
 public class ShelfServiceImpl implements ShelfService {
 
-	@Autowired
-	private ShelfRepository repository;
+    @Autowired
+    private ShelfRepository repository;
 
-	@Override
-	public Shelf getById(int id) {
-		return repository.get(Shelf.class, id);
-	}
+    @Override
+    public Shelf getById(int id) {
+        return repository.get(Shelf.class, id);
+    }
 
-	@Override
-	public List<Shelf> getAll() {
-		return repository.getAll(Shelf.class);
+    @Override
+    public List<Shelf> getAll() {
+        return repository.getAll(Shelf.class);
     }
 
     @Override
@@ -38,13 +38,13 @@ public class ShelfServiceImpl implements ShelfService {
 
     @Override
     public List<ShelfType> getAllShelfTypes() {
-      return repository.getAllShelfTypes();
+        return repository.getAllShelfTypes();
     }
 
     @Override
-	public void save(Shelf toSave) {
-		repository.save(toSave);
-	}
+    public void save(Shelf toSave) {
+        repository.save(toSave);
+    }
 
     @Override
     public void delete(Shelf toDelete) {

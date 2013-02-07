@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface DeviceRepository extends BaseRepository {
 
-   public List<DeviceType> getAllDeviceTypes();
+    public List<DeviceType> getAllDeviceTypes();
 
-   public List<Shelf> getAllShelvesForThisDeviceType(int deviceTypeId);
+    public List<Shelf> getAllShelvesForThisDeviceType(int deviceTypeId);
 
-   public DeviceType loadDeviceTypeById(int id);
+    public DeviceType loadDeviceTypeById(int id);
 
 }

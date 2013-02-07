@@ -27,7 +27,7 @@ public class ShelfTypeConverter implements Converter {
     @Override
     public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
         if (value instanceof ShelfType) {
-            return String.valueOf(((ShelfType)value).getId());
+            return String.valueOf(((ShelfType) value).getId());
         } else {
             return null;
         }

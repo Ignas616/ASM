@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.1.1
 -- Dumped by pg_dump version 9.1.1
--- Started on 2013-02-04 20:59:12
+-- Started on 2013-02-07 14:32:30
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -13,7 +13,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 183 (class 3079 OID 11638)
+-- TOC entry 182 (class 3079 OID 11638)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -21,8 +21,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 1937 (class 0 OID 0)
--- Dependencies: 183
+-- TOC entry 1936 (class 0 OID 0)
+-- Dependencies: 182
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -30,6 +30,68 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 536 (class 1247 OID 21278)
+-- Dependencies: 5 181
+-- Name: cardtypereport; Type: TYPE; Schema: public; Owner: reg_admin
+--
+
+CREATE TYPE cardtypereport AS (
+	physicalid integer,
+	addressid integer,
+	count bigint
+);
+
+
+ALTER TYPE public.cardtypereport OWNER TO reg_admin;
+
+--
+-- TOC entry 194 (class 1255 OID 21279)
+-- Dependencies: 536 5
+-- Name: get_card_type_report(integer); Type: FUNCTION; Schema: public; Owner: reg_admin
+--
+
+CREATE FUNCTION get_card_type_report(cardid integer) RETURNS SETOF cardtypereport
+    LANGUAGE sql
+    AS $_$SELECT 
+  physical_location.id as physicalid, 
+  null as addressid,
+  count(card_type.id) as count  
+FROM 
+  public.card_type, 
+  public.card, 
+  public.shelf, 
+  public.device, 
+  public.physical_location
+WHERE 
+  card_type.id = card.card_type AND
+  card.shelf_id = shelf.id AND
+  shelf.device_id = device.id AND
+  device.physical_location_id = physical_location.id AND
+  card_type.id = $1
+ group by card_type.id, physicalid
+UNION ALL 
+SELECT 
+  null as physicalid,
+  address_location.id  as addressid, 
+  count(card_type.id) as count 
+FROM 
+  public.card_type, 
+  public.card, 
+  public.shelf, 
+  public.device, 
+  public.address_location
+WHERE 
+  card_type.id = card.card_type AND
+  card.shelf_id = shelf.id AND
+  shelf.device_id = device.id AND
+  device.address_location_id = address_location.id AND
+  card_type.id = $1
+ group by card_type.id, addressid;$_$;
+
+
+ALTER FUNCTION public.get_card_type_report(cardid integer) OWNER TO reg_admin;
 
 SET default_tablespace = '';
 
@@ -69,7 +131,7 @@ CREATE SEQUENCE address_location_seq
 ALTER TABLE public.address_location_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1938 (class 0 OID 0)
+-- TOC entry 1937 (class 0 OID 0)
 -- Dependencies: 176
 -- Name: address_location_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
@@ -86,7 +148,8 @@ SELECT pg_catalog.setval('address_location_seq', 1, true);
 CREATE TABLE card (
     id integer NOT NULL,
     name character varying(255),
-    card_type integer
+    card_type integer,
+    shelf_id integer
 );
 
 
@@ -109,7 +172,7 @@ CREATE SEQUENCE card_seq
 ALTER TABLE public.card_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1939 (class 0 OID 0)
+-- TOC entry 1938 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: card_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
@@ -149,7 +212,7 @@ CREATE SEQUENCE card_type_seq
 ALTER TABLE public.card_type_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1940 (class 0 OID 0)
+-- TOC entry 1939 (class 0 OID 0)
 -- Dependencies: 174
 -- Name: card_type_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
@@ -206,7 +269,7 @@ CREATE SEQUENCE device_allowed_shelf_types_seq
 ALTER TABLE public.device_allowed_shelf_types_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1941 (class 0 OID 0)
+-- TOC entry 1940 (class 0 OID 0)
 -- Dependencies: 180
 -- Name: device_allowed_shelf_types_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
@@ -231,27 +294,13 @@ CREATE SEQUENCE device_seq
 ALTER TABLE public.device_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1942 (class 0 OID 0)
+-- TOC entry 1941 (class 0 OID 0)
 -- Dependencies: 168
 -- Name: device_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
 
-SELECT pg_catalog.setval('device_seq', 5, true);
+SELECT pg_catalog.setval('device_seq', 6, true);
 
-
---
--- TOC entry 181 (class 1259 OID 21251)
--- Dependencies: 5
--- Name: device_shelf_rel; Type: TABLE; Schema: public; Owner: reg_admin; Tablespace: 
---
-
-CREATE TABLE device_shelf_rel (
-    device_id integer,
-    shelf_id integer
-);
-
-
-ALTER TABLE public.device_shelf_rel OWNER TO reg_admin;
 
 --
 -- TOC entry 170 (class 1259 OID 21165)
@@ -285,7 +334,7 @@ CREATE SEQUENCE device_type_seq
 ALTER TABLE public.device_type_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1943 (class 0 OID 0)
+-- TOC entry 1942 (class 0 OID 0)
 -- Dependencies: 169
 -- Name: device_type_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
@@ -327,7 +376,7 @@ CREATE SEQUENCE physical_location_seq
 ALTER TABLE public.physical_location_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1944 (class 0 OID 0)
+-- TOC entry 1943 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: physical_location_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
@@ -344,7 +393,8 @@ SELECT pg_catalog.setval('physical_location_seq', 1, true);
 CREATE TABLE shelf (
     id integer NOT NULL,
     number integer,
-    shelf_type integer
+    shelf_type integer,
+    device_id integer
 );
 
 
@@ -382,27 +432,13 @@ CREATE SEQUENCE shelf_allowed_card_types_seq
 ALTER TABLE public.shelf_allowed_card_types_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1946 (class 0 OID 0)
+-- TOC entry 1945 (class 0 OID 0)
 -- Dependencies: 178
 -- Name: shelf_allowed_card_types_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
 
 SELECT pg_catalog.setval('shelf_allowed_card_types_seq', 1, false);
 
-
---
--- TOC entry 182 (class 1259 OID 21254)
--- Dependencies: 5
--- Name: shelf_card_rel; Type: TABLE; Schema: public; Owner: reg_admin; Tablespace: 
---
-
-CREATE TABLE shelf_card_rel (
-    shelf_id integer,
-    card_id integer
-);
-
-
-ALTER TABLE public.shelf_card_rel OWNER TO reg_admin;
 
 --
 -- TOC entry 171 (class 1259 OID 21172)
@@ -421,12 +457,12 @@ CREATE SEQUENCE shelf_seq
 ALTER TABLE public.shelf_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1947 (class 0 OID 0)
+-- TOC entry 1946 (class 0 OID 0)
 -- Dependencies: 171
 -- Name: shelf_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
 
-SELECT pg_catalog.setval('shelf_seq', 4, true);
+SELECT pg_catalog.setval('shelf_seq', 10, true);
 
 
 --
@@ -461,7 +497,7 @@ CREATE SEQUENCE shelf_type_seq
 ALTER TABLE public.shelf_type_seq OWNER TO reg_admin;
 
 --
--- TOC entry 1948 (class 0 OID 0)
+-- TOC entry 1947 (class 0 OID 0)
 -- Dependencies: 172
 -- Name: shelf_type_seq; Type: SEQUENCE SET; Schema: public; Owner: reg_admin
 --
@@ -470,7 +506,7 @@ SELECT pg_catalog.setval('shelf_type_seq', 1, false);
 
 
 --
--- TOC entry 1921 (class 0 OID 21120)
+-- TOC entry 1922 (class 0 OID 21120)
 -- Dependencies: 162
 -- Data for Name: address_location; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
@@ -479,18 +515,18 @@ INSERT INTO address_location VALUES (1, 'Tallinn', 'Sqpruse', 'MyHouse', '24s');
 
 
 --
--- TOC entry 1924 (class 0 OID 21132)
+-- TOC entry 1925 (class 0 OID 21132)
 -- Dependencies: 165
 -- Data for Name: card; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
 
-INSERT INTO card VALUES (3, '3gb Card', 1);
-INSERT INTO card VALUES (2, '2gb Card', 2);
-INSERT INTO card VALUES (4, '4gb Card', 4);
+INSERT INTO card VALUES (4, '4gb Card', 4, NULL);
+INSERT INTO card VALUES (2, '2gb Card', 2, NULL);
+INSERT INTO card VALUES (3, '3gb', 3, NULL);
 
 
 --
--- TOC entry 1926 (class 0 OID 21141)
+-- TOC entry 1927 (class 0 OID 21141)
 -- Dependencies: 167
 -- Data for Name: card_type; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
@@ -503,17 +539,17 @@ INSERT INTO card_type VALUES (5, 'aces', 5);
 
 
 --
--- TOC entry 1922 (class 0 OID 21126)
+-- TOC entry 1923 (class 0 OID 21126)
 -- Dependencies: 163
 -- Data for Name: device; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
 
 INSERT INTO device VALUES (1, 'Apple Server', 2, NULL, 1);
-INSERT INTO device VALUES (5, 'Orange Server', 3, 1, NULL);
+INSERT INTO device VALUES (6, 'Apple Server 2', 2, NULL, 2);
 
 
 --
--- TOC entry 1929 (class 0 OID 21241)
+-- TOC entry 1930 (class 0 OID 21241)
 -- Dependencies: 179
 -- Data for Name: device_allowed_shelf_types; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
@@ -527,20 +563,7 @@ INSERT INTO device_allowed_shelf_types VALUES (6, 3, 3);
 
 
 --
--- TOC entry 1930 (class 0 OID 21251)
--- Dependencies: 181
--- Data for Name: device_shelf_rel; Type: TABLE DATA; Schema: public; Owner: reg_admin
---
-
-INSERT INTO device_shelf_rel VALUES (1, 1);
-INSERT INTO device_shelf_rel VALUES (1, 3);
-INSERT INTO device_shelf_rel VALUES (5, 4);
-INSERT INTO device_shelf_rel VALUES (5, 3);
-INSERT INTO device_shelf_rel VALUES (5, 1);
-
-
---
--- TOC entry 1927 (class 0 OID 21165)
+-- TOC entry 1928 (class 0 OID 21165)
 -- Dependencies: 170
 -- Data for Name: device_type; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
@@ -551,27 +574,26 @@ INSERT INTO device_type VALUES (3, 'Big  Server', 3);
 
 
 --
--- TOC entry 1920 (class 0 OID 21117)
+-- TOC entry 1921 (class 0 OID 21117)
 -- Dependencies: 161
 -- Data for Name: physical_location; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
 
-INSERT INTO physical_location VALUES (1, 1, 2, 3, 'MyLocation');
+INSERT INTO physical_location VALUES (2, 4, 5, 6, 'Location 2');
+INSERT INTO physical_location VALUES (1, 1, 2, 3, 'Location 1');
 
 
 --
--- TOC entry 1923 (class 0 OID 21129)
+-- TOC entry 1924 (class 0 OID 21129)
 -- Dependencies: 164
 -- Data for Name: shelf; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
 
-INSERT INTO shelf VALUES (4, 3, 3);
-INSERT INTO shelf VALUES (3, 2, 2);
-INSERT INTO shelf VALUES (1, 1, 1);
+INSERT INTO shelf VALUES (10, 1111, 2, NULL);
 
 
 --
--- TOC entry 1928 (class 0 OID 21234)
+-- TOC entry 1929 (class 0 OID 21234)
 -- Dependencies: 177
 -- Data for Name: shelf_allowed_card_types; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
@@ -587,18 +609,7 @@ INSERT INTO shelf_allowed_card_types VALUES (3, 4, 8);
 
 
 --
--- TOC entry 1931 (class 0 OID 21254)
--- Dependencies: 182
--- Data for Name: shelf_card_rel; Type: TABLE DATA; Schema: public; Owner: reg_admin
---
-
-INSERT INTO shelf_card_rel VALUES (3, 3);
-INSERT INTO shelf_card_rel VALUES (1, 2);
-INSERT INTO shelf_card_rel VALUES (4, 4);
-
-
---
--- TOC entry 1925 (class 0 OID 21138)
+-- TOC entry 1926 (class 0 OID 21138)
 -- Dependencies: 166
 -- Data for Name: shelf_type; Type: TABLE DATA; Schema: public; Owner: reg_admin
 --
@@ -609,7 +620,7 @@ INSERT INTO shelf_type VALUES (3, 'shelfType3', 3);
 
 
 --
--- TOC entry 1903 (class 2606 OID 21198)
+-- TOC entry 1901 (class 2606 OID 21198)
 -- Dependencies: 162 162
 -- Name: addresslocation_pkey; Type: CONSTRAINT; Schema: public; Owner: reg_admin; Tablespace: 
 --
@@ -619,7 +630,7 @@ ALTER TABLE ONLY address_location
 
 
 --
--- TOC entry 1909 (class 2606 OID 21185)
+-- TOC entry 1908 (class 2606 OID 21185)
 -- Dependencies: 165 165
 -- Name: card_pkey; Type: CONSTRAINT; Schema: public; Owner: reg_admin; Tablespace: 
 --
@@ -649,7 +660,7 @@ ALTER TABLE ONLY device_allowed_shelf_types
 
 
 --
--- TOC entry 1905 (class 2606 OID 21156)
+-- TOC entry 1903 (class 2606 OID 21156)
 -- Dependencies: 163 163
 -- Name: device_pkey; Type: CONSTRAINT; Schema: public; Owner: reg_admin; Tablespace: 
 --
@@ -669,7 +680,7 @@ ALTER TABLE ONLY card_type
 
 
 --
--- TOC entry 1901 (class 2606 OID 21196)
+-- TOC entry 1899 (class 2606 OID 21196)
 -- Dependencies: 161 161
 -- Name: physicallocation_pkey; Type: CONSTRAINT; Schema: public; Owner: reg_admin; Tablespace: 
 --
@@ -689,7 +700,7 @@ ALTER TABLE ONLY shelf_allowed_card_types
 
 
 --
--- TOC entry 1907 (class 2606 OID 21179)
+-- TOC entry 1906 (class 2606 OID 21179)
 -- Dependencies: 164 164
 -- Name: shelf_pkey; Type: CONSTRAINT; Schema: public; Owner: reg_admin; Tablespace: 
 --
@@ -709,7 +720,35 @@ ALTER TABLE ONLY shelf_type
 
 
 --
--- TOC entry 1936 (class 0 OID 0)
+-- TOC entry 1904 (class 1259 OID 21296)
+-- Dependencies: 164
+-- Name: fki_device_fkey; Type: INDEX; Schema: public; Owner: reg_admin; Tablespace: 
+--
+
+CREATE INDEX fki_device_fkey ON shelf USING btree (device_id);
+
+
+--
+-- TOC entry 1909 (class 1259 OID 21302)
+-- Dependencies: 165
+-- Name: fki_shelf_fk; Type: INDEX; Schema: public; Owner: reg_admin; Tablespace: 
+--
+
+CREATE INDEX fki_shelf_fk ON card USING btree (shelf_id);
+
+
+--
+-- TOC entry 1920 (class 2606 OID 21291)
+-- Dependencies: 164 1902 163
+-- Name: device_fkey; Type: FK CONSTRAINT; Schema: public; Owner: reg_admin
+--
+
+ALTER TABLE ONLY shelf
+    ADD CONSTRAINT device_fkey FOREIGN KEY (device_id) REFERENCES device(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1935 (class 0 OID 0)
 -- Dependencies: 5
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -721,7 +760,7 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
--- TOC entry 1945 (class 0 OID 0)
+-- TOC entry 1944 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: shelf_allowed_card_types; Type: ACL; Schema: public; Owner: reg_admin
 --
@@ -731,7 +770,7 @@ REVOKE ALL ON TABLE shelf_allowed_card_types FROM reg_admin;
 GRANT ALL ON TABLE shelf_allowed_card_types TO reg_admin;
 
 
--- Completed on 2013-02-04 20:59:12
+-- Completed on 2013-02-07 14:32:32
 
 --
 -- PostgreSQL database dump complete

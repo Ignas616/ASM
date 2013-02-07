@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface ShelfRepository extends BaseRepository {
 
-   public List<ShelfType> getAllShelfTypes();
+    public List<ShelfType> getAllShelfTypes();
 
-   public List<Card> getAllCardsForThisShelfType(int shelfTypeId);
+    public List<Card> getAllCardsForThisShelfType(int shelfTypeId);
 
-   public List<Card> getAllCardsForThisShelfId(int shelfId);
+    public List<Card> getAllCardsForThisShelfId(int shelfId);
 
-   public ShelfType loadShelfTypeById(int id);
+    public ShelfType loadShelfTypeById(int id);
 
 }

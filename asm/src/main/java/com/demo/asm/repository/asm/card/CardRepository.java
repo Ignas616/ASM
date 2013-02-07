@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface CardRepository extends BaseRepository {
 
-   public List<CardType> getAllCardTypes();
+    public List<CardType> getAllCardTypes();
 
-   public CardType loadCardTypeById(int id);
+    public CardType loadCardTypeById(int id);
 
-   public List<CardTypeReport> getCardTypeReport(int cardTypeId);
+    public List<CardTypeReport> getCardTypeReport(int cardTypeId);
 
 }

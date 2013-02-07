@@ -12,23 +12,23 @@ import java.util.List;
 @Service("addressLocationService")
 public class AddressLocationServiceImpl implements AddressLocationService {
 
-	@Autowired
-	private AddressLocationRepository repository;
-
-	@Override
-	public AddressLocation getById(int id) {
-		return repository.get(AddressLocation.class, id);
-	}
-
-	@Override
-	public List<AddressLocation> getAll() {
-		return repository.getAll(AddressLocation.class);
-	}
+    @Autowired
+    private AddressLocationRepository repository;
 
     @Override
-	public void save(AddressLocation toSave) {
-		repository.save(toSave);
-	}
+    public AddressLocation getById(int id) {
+        return repository.get(AddressLocation.class, id);
+    }
+
+    @Override
+    public List<AddressLocation> getAll() {
+        return repository.getAll(AddressLocation.class);
+    }
+
+    @Override
+    public void save(AddressLocation toSave) {
+        repository.save(toSave);
+    }
 
     @Override
     public void delete(AddressLocation toDelete) {

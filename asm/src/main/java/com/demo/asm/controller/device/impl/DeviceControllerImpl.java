@@ -1,43 +1,41 @@
 package com.demo.asm.controller.device.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
+import com.demo.asm.controller.device.DeviceController;
+import com.demo.asm.model.device.Device;
 import com.demo.asm.model.device.DeviceType;
 import com.demo.asm.model.location.AddressLocation;
 import com.demo.asm.model.location.PhysicalLocation;
 import com.demo.asm.model.shelf.Shelf;
+import com.demo.asm.services.device.DeviceService;
 import com.demo.asm.services.location.AddressLocationService;
 import com.demo.asm.services.location.PhysicalLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.demo.asm.controller.device.DeviceController;
-import com.demo.asm.model.device.Device;
-import com.demo.asm.services.device.DeviceService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller("deviceController")
 @Scope("session")
 public class DeviceControllerImpl implements DeviceController {
 
-	@Autowired
-	private DeviceService service;
+    @Autowired
+    private DeviceService service;
 
     @Autowired
     private PhysicalLocationService physicalService;
 
     @Autowired
     private AddressLocationService addressService;
-	
-	private List<Device> deviceList;
+
+    private List<Device> deviceList;
 
     private List<DeviceType> deviceTypeList;
-	
-	private Device selected;
+
+    private Device selected;
 
     private List<Shelf> shelfList;
 
@@ -50,7 +48,6 @@ public class DeviceControllerImpl implements DeviceController {
     private List<AddressLocation> addressLocationList;
 
     private AddressLocation selectedAddressLocation;
-
 
 
     public DeviceService getService() {
@@ -150,23 +147,23 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     @Override
-	public void createNew() {
-		Device tmpDevice = new Device();
+    public void createNew() {
+        Device tmpDevice = new Device();
         tmpDevice.setShelfList(new ArrayList<Shelf>());
-		setSelected(tmpDevice);		
-	}
+        setSelected(tmpDevice);
+    }
 
-	@Override
-	public void save() {
+    @Override
+    public void save() {
         try {
             service.save(getSelected());
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		} catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
-			FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
-		}
-	}
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Saved", "Data Saved");
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error during saving! " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+        }
+    }
 
     @Override
     public void delete() {
@@ -181,16 +178,16 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     public void updateData() {
-		setDeviceList(service.getAll());
+        setDeviceList(service.getAll());
         setDeviceTypeList(service.getAllDeviceTypes());
-	}
+    }
 
     public void updateShelfList() {
         setShelfList(service.getAllShelvesForThisDeviceType(selected.getDeviceType().getId()));
     }
 
     public boolean addSelectedShelf() {
-        if(selected.getDeviceType().getNoOfShelves()>selected.getShelfList().size()){
+        if (selected.getDeviceType().getNoOfShelves() > selected.getShelfList().size()) {
             selected.getShelfList().add(selectedShelf);
             return true;
         } else {
@@ -204,15 +201,15 @@ public class DeviceControllerImpl implements DeviceController {
         selected.getShelfList().remove(selectedShelf);
     }
 
-    public void getPhysicalLocations(){
+    public void getPhysicalLocations() {
         setPhysicalLocationList(physicalService.getAll());
     }
 
-    public void getAddressLocations(){
+    public void getAddressLocations() {
         setAddressLocationList(addressService.getAll());
     }
 
-    public void addSelectedLocation(){
+    public void addSelectedLocation() {
         selected.setAddessLocation(getSelectedAddressLocation());
         selected.setPhysicalLocation(getSelectedPhysicalLocation());
         setSelectedAddressLocation(null);
@@ -220,7 +217,15 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     public boolean validateBeforeSave() {
-        if(selected.getShelfList() != null && selected.getShelfList().size()>0){
+        for(Shelf shelf: selected.getShelfList()){
+            if (shelf.getDevice() != null && shelf.getDevice().getId() != selected.getId()){
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "This shelf is already in use: "+ shelf.getNumber()+" on the device: "+shelf.getDevice().getName());
+                FacesContext.getCurrentInstance().addMessage("adminSaveMsg", msg);
+                return false;
+            }
+        }
+
+        if (selected.getShelfList() != null && selected.getShelfList().size() > 0) {
             return true;
         } else {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The Device Must Have At Least 1 Shelf");
@@ -228,9 +233,9 @@ public class DeviceControllerImpl implements DeviceController {
             return false;
         }
     }
-	
-	public boolean checkSelected() {
+
+    public boolean checkSelected() {
         return getSelected() != null;
-	}
+    }
 
 }
