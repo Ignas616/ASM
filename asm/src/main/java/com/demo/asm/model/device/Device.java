@@ -1,16 +1,12 @@
 package com.demo.asm.model.device;
 
-import com.demo.asm.model.card.Card;
 import com.demo.asm.model.location.AddressLocation;
 import com.demo.asm.model.location.PhysicalLocation;
 import com.demo.asm.model.shelf.Shelf;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "device")

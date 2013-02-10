@@ -1,6 +1,7 @@
 package com.demo.asm.model.location;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class Location {

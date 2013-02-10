@@ -2,8 +2,6 @@ package com.demo.asm.model.shelf;
 
 import com.demo.asm.model.card.Card;
 import com.demo.asm.model.device.Device;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;

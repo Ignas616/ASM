@@ -1,8 +1,6 @@
 package com.demo.asm.model.report;
 
 import com.demo.asm.model.card.CardType;
-import com.demo.asm.model.location.AddressLocation;
-import com.demo.asm.model.location.PhysicalLocation;
 
 import java.util.List;
 
